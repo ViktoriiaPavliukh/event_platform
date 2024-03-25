@@ -5,5 +5,5 @@
       <stop offset="100%" stop-color="#DF5979"/>
     </linearGradient>
   </defs>
-  <text x="0" y="30" font-family="Arial, sans-serif" font-size="50" fill="url(#gradient)">EventSpot</text>
+  <text x="0" y="30" font-family="Arial, sans-serif" font-size="40" fill="url(#gradient)">EventSpot</text>
 </svg>
