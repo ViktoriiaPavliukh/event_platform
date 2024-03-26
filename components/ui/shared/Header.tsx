@@ -64,6 +64,7 @@ const Header: React.FC<Props> = (props) => {
   const container =
     window !== undefined ? () => window().document.body : undefined;
   const { user } = useUser();
+  console.log(user);
 
   return (
     <Box
@@ -76,7 +77,7 @@ const Header: React.FC<Props> = (props) => {
         component="nav"
         sx={{
           display: "flex",
-          paddingX: "40px"
+          paddingX: "40px",
         }}
       >
         <Toolbar
