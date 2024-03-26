@@ -1,7 +1,13 @@
 import * as React from "react";
-import Stack from "@mui/material/Stack";
 import Button from "@mui/material/Button";
+import { ReactNode } from "react";
 
-export default function ButtonContained() {
-  return <Button variant="contained"></Button>;
+interface ButtonContainedProps {
+  children: ReactNode;
 }
+
+const ButtonContained: React.FC<ButtonContainedProps> = ({ children }) => {
+  return <Button variant="contained">{children}</Button>;
+};
+
+export default ButtonContained;
