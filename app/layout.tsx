@@ -1,12 +1,14 @@
 import { ClerkProvider } from "@clerk/nextjs";
 import type { Metadata } from "next";
-import { Poppins } from "next/font/google";
+import { Mulish } from "next/font/google";
+import { ThemeProvider } from "@mui/material/styles";
+import { lightTheme, darkTheme } from "./theme";
 import "./globals.css";
 
-const inter = Poppins({
+const inter = Mulish({
   subsets: ["latin"],
   weight: ["400", "500", "600", "700"],
-  variable: "--font-poppins",
+  variable: "--font-mulish",
 });
 
 export const metadata: Metadata = {
@@ -22,11 +24,14 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const isDarkModeEnabled = false;
   return (
-    <ClerkProvider>
-      <html lang="en">
-        <body className={inter.variable}>{children}</body>
-      </html>
-    </ClerkProvider>
+    <ThemeProvider theme={isDarkModeEnabled ? darkTheme : lightTheme}>
+      <ClerkProvider>
+        <html lang="en">
+          <body className={inter.variable}>{children}</body>
+        </html>
+      </ClerkProvider>
+    </ThemeProvider>
   );
 }

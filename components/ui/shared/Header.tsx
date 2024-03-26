@@ -21,13 +21,13 @@ import Image from "next/image";
 import { SignOutButton } from "@clerk/nextjs";
 import { SignedIn } from "@clerk/nextjs";
 import { UserButton } from "@clerk/nextjs";
-import ButtonContained from "../ButtonContained";
 import Link from "next/link";
 import { useUser } from "@clerk/nextjs";
 import { navItems } from "@/constants";
+import { usePathname } from "next/navigation";
+
 // @ts-ignore
 import type { Props } from "@/types";
-import { usePathname } from "next/navigation";
 
 const drawerWidth = 240;
 
@@ -66,10 +66,26 @@ const Header: React.FC<Props> = (props) => {
   const { user } = useUser();
 
   return (
-    <Box sx={{ display: "flex" }}>
+    <Box
+      sx={{
+        display: "flex",
+      }}
+    >
       <CssBaseline />
-      <AppBar component="nav">
-        <Toolbar>
+      <AppBar
+        component="nav"
+        sx={{
+          display: "flex",
+          paddingX: "40px"
+        }}
+      >
+        <Toolbar
+          sx={{
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+          }}
+        >
           <IconButton
             color="inherit"
             aria-label="open drawer"
@@ -79,23 +95,40 @@ const Header: React.FC<Props> = (props) => {
           >
             <MenuIcon />
           </IconButton>
-          <Image
-            src="/assets/images/logo.svg"
-            alt="EventSpot Logo"
-            width={100}
-            height={38}
-          />
+          <Link href="/">
+            <Image
+              src="/assets/images/logo.svg"
+              alt="EventSpot Logo"
+              width={100}
+              height={38}
+            />
+          </Link>
           <Box sx={{ display: { xs: "none", sm: "block" } }}>
             {navItems.map((item) => (
-              <Button key={item.label} sx={{ color: "#fff" }}>
+              <Button
+                key={item.label}
+                sx={{ color: "#000", textTransform: "capitalize" }}
+              >
                 {item.label}
               </Button>
             ))}
           </Box>
           {user ? (
-            <SignOutButton>
-              <Link href="/sign-in">Logout</Link>
-            </SignOutButton>
+            <Box
+              sx={{
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+                gap: "10px",
+              }}
+            >
+              <SignedIn>
+                <UserButton afterSignOutUrl="/" />
+              </SignedIn>
+              <SignOutButton>
+                <Link href="/sign-in">Logout</Link>
+              </SignOutButton>
+            </Box>
           ) : (
             <Link href="/sign-in">
               <Button sx={{ color: "#fff" }}>Login</Button>
