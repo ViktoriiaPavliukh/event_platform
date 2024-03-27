@@ -5,17 +5,22 @@ import {
   FormControl,
   FormHelperText,
   InputLabel,
+  InputAdornment,
   TextField,
 } from "@mui/material";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
+import DatePicker from "react-datepicker";
+import Image from "next/image";
 import { eventFormSchema } from "@/lib/validator";
 import { eventDefaultValues } from "@/constants";
 import SelectItem from "./SelectItem";
 import { UploadButton } from "@/lib/utils";
 import { FileDownload } from "@mui/icons-material";
 import FileUploader from "./FileUploader";
+import "react-datepicker/dist/react-datepicker.css";
+import { Event, LocationOn } from "@mui/icons-material";
 
 type EventFormProps = {
   userId: string;
@@ -26,6 +31,8 @@ type EventFormProps = {
 
 export const EventForm = ({ userId, type }: EventFormProps) => {
   const [files, setFiles] = useState<File[]>([]);
+  const [startDate, setStartDate] = useState(new Date());
+  const [endDate, setEndDate] = useState(new Date());
   const initialValues = eventDefaultValues;
   const form = useForm<z.infer<typeof eventFormSchema>>({
     resolver: zodResolver(eventFormSchema),
@@ -121,7 +128,79 @@ export const EventForm = ({ userId, type }: EventFormProps) => {
             }}
           /> */}
         </FormControl>
-
+        <FormControl>
+          <TextField
+            id="location"
+            type="text"
+            fullWidth
+            label="Location"
+            variant="outlined"
+            autoComplete="Location"
+            defaultValue={initialValues.location}
+            placeholder="Event location or Online"
+            {...form.register("location")}
+            InputProps={{
+              endAdornment: (
+                <InputAdornment position="end">
+                  <LocationOn />
+                </InputAdornment>
+              ),
+            }}
+          />
+        </FormControl>
+        <FormControl>
+          <DatePicker
+            placeholderText="Start Date"
+            selected={startDate}
+            onChange={(date: Date) => setStartDate(date)}
+            showTimeSelect
+            timeInputLabel="Time:"
+            dateFormat="MM/dd/yyyy h:mm aa"
+            wrapperClassName="datePicker"
+            customInput={
+              <TextField
+                fullWidth
+                variant="outlined"
+                label="Start Date"
+                placeholder="Start Date"
+                // autoComplete="Start date"
+                InputProps={{
+                  endAdornment: (
+                    <InputAdornment position="end">
+                      <Event />
+                    </InputAdornment>
+                  ),
+                }}
+              />
+            }
+          />
+        </FormControl>
+        <FormControl>
+          <DatePicker
+            placeholderText="End Date"
+            selected={endDate}
+            onChange={(date: Date) => setEndDate(date)}
+            showTimeSelect
+            timeInputLabel="Time:"
+            dateFormat="MM/dd/yyyy h:mm aa"
+            wrapperClassName="datePicker"
+            customInput={
+              <TextField
+                fullWidth
+                variant="outlined"
+                label="End Date"
+                placeholder="End Date"
+                InputProps={{
+                  endAdornment: (
+                    <InputAdornment position="end">
+                      <Event />
+                    </InputAdornment>
+                  ),
+                }}
+              />
+            }
+          />
+        </FormControl>
         <Button type="submit" variant="contained">
           Submit
         </Button>
