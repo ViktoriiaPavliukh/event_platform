@@ -1,5 +1,12 @@
 import qs from "query-string";
 import { UrlQueryParams, RemoveUrlQueryParams } from "@/types";
+import {
+  generateUploadButton,
+  generateUploadDropzone,
+} from "@uploadthing/react";
+import { generateReactHelpers } from "@uploadthing/react/hooks";
+
+import type { OurFileRouter } from "@/app/api/uploadthing/core";
 
 export const formatDateTime = (dateString: Date) => {
   const dateTimeOptions: Intl.DateTimeFormatOptions = {
@@ -95,3 +102,9 @@ export const handleError = (error: unknown) => {
   console.error(error);
   throw new Error(typeof error === "string" ? error : JSON.stringify(error));
 };
+
+
+export const UploadButton = generateUploadButton<OurFileRouter>();
+export const UploadDropzone = generateUploadDropzone<OurFileRouter>();
+export const { useUploadThing, uploadFiles } =
+  generateReactHelpers<OurFileRouter>();

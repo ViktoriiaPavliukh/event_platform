@@ -28,6 +28,7 @@ import { usePathname } from "next/navigation";
 
 // @ts-ignore
 import type { Props } from "@/types";
+import { width } from "@mui/system";
 
 const drawerWidth = 240;
 
@@ -35,6 +36,7 @@ const Header: React.FC<Props> = (props) => {
   const { window } = props;
   const [mobileOpen, setMobileOpen] = React.useState(false);
   const pathname = usePathname();
+  console.log(pathname);
 
   const handleDrawerToggle = () => {
     setMobileOpen((prevState) => !prevState);
@@ -42,17 +44,27 @@ const Header: React.FC<Props> = (props) => {
 
   const drawer = (
     <Box onClick={handleDrawerToggle} sx={{ textAlign: "center" }}>
-      <Typography variant="h6" sx={{ my: 2 }}>
-        EventSpot
-      </Typography>
+      <Link href="/">
+        <Image
+          src="/assets/images/logo.svg"
+          alt="EventSpot Logo"
+          width={100}
+          height={38}
+        />
+      </Link>
       <Divider />
-      <List>
+      <List sx={{ display: "flex", flexDirection: "column" }}>
         {navItems.map((item) => {
           const isActive = pathname === item.route;
           return (
             <ListItem key={item.route} disablePadding>
-              <ListItemButton sx={{ textAlign: "center" }}>
-                <ListItemText primary={item.label} />
+              <ListItemButton sx={{ paddingLeft: "40px", py: "16px" }}>
+                <Link
+                  color={isActive ? "primary" : "inherit"}
+                  href={item.route}
+                >
+                  {item.label}
+                </Link>
               </ListItemButton>
             </ListItem>
           );
@@ -64,7 +76,7 @@ const Header: React.FC<Props> = (props) => {
   const container =
     window !== undefined ? () => window().document.body : undefined;
   const { user } = useUser();
-  console.log(user);
+  // console.log(user);
 
   return (
     <Box
@@ -92,7 +104,7 @@ const Header: React.FC<Props> = (props) => {
             aria-label="open drawer"
             edge="start"
             onClick={handleDrawerToggle}
-            sx={{ mr: 2, display: { sm: "none" } }}
+            sx={{ mr: 2, display: { md: "none" } }}
           >
             <MenuIcon />
           </IconButton>
@@ -104,16 +116,30 @@ const Header: React.FC<Props> = (props) => {
               height={38}
             />
           </Link>
-          <Box sx={{ display: { xs: "none", sm: "block" } }}>
-            {navItems.map((item) => (
-              <Button
-                key={item.label}
-                sx={{ color: "#000", textTransform: "capitalize" }}
-              >
-                {item.label}
-              </Button>
-            ))}
-          </Box>
+          <List sx={{ display: { xs: "none", md: "flex" } }}>
+            {navItems.map((item) => {
+              const isActive = pathname === item.route;
+              return (
+                <ListItem key={item.route} disablePadding>
+                  <ListItemButton
+                    sx={{
+                      display: "flex",
+                      minWidth: "150px",
+                      justifyContent: "center",
+                    }}
+                  >
+                    <Link
+                      color={isActive ? "primary" : "inherit"}
+                      href={item.route}
+                    >
+                      {item.label}
+                    </Link>
+                  </ListItemButton>
+                </ListItem>
+              );
+            })}
+          </List>
+
           {user ? (
             <Box
               sx={{
@@ -132,15 +158,9 @@ const Header: React.FC<Props> = (props) => {
             </Box>
           ) : (
             <Link href="/sign-in">
-              <Button sx={{ color: "#fff" }}>Login</Button>
+              <Button sx={{ color: "#000" }}>Login</Button>
             </Link>
           )}
-          {/* <SignedIn>
-            <UserButton afterSignOutUrl="/" />
-          </SignedIn>
-          <SignOutButton>
-            <Link href="/sign-in">Login</Link>
-          </SignOutButton> */}
         </Toolbar>
       </AppBar>
       <nav>
@@ -153,7 +173,7 @@ const Header: React.FC<Props> = (props) => {
             keepMounted: true,
           }}
           sx={{
-            display: { xs: "block", sm: "none" },
+            display: { xs: "block", md: "none" },
             "& .MuiDrawer-paper": {
               boxSizing: "border-box",
               width: drawerWidth,
