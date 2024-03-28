@@ -14,37 +14,76 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import DatePicker from "react-datepicker";
-import Image from "next/image";
+import { useRouter } from "next/navigation";
+import { Event, LocationOn, AttachMoney } from "@mui/icons-material";
+import LinkIcon from "@mui/icons-material/Link";
 import { eventFormSchema } from "@/lib/validator";
 import { eventDefaultValues } from "@/constants";
 import SelectItem from "./SelectItem";
 import { UploadButton } from "@/utils/uploadthings";
 import { FileDownload } from "@mui/icons-material";
 import FileUploader from "./FileUploader";
+import { useUploadThing } from "@/utils/uploadthings";
+import { createEvent } from "@/lib/actions/event.actions";
 import "react-datepicker/dist/react-datepicker.css";
-import { Event, LocationOn, AttachMoney } from "@mui/icons-material";
-import LinkIcon from "@mui/icons-material/Link";
+import { useUser } from "@clerk/nextjs";
 
 type EventFormProps = {
-  userId: string;
+  userId?: string;
   type: "Create" | "Update";
   // event?: IEvent;
   // eventId?: string;
 };
 
-export const EventForm = ({ userId, type }: EventFormProps) => {
+export const EventForm = ({ type }: EventFormProps) => {
   const [files, setFiles] = useState<File[]>([]);
   const [startDate, setStartDate] = useState(new Date());
   const [endDate, setEndDate] = useState(new Date());
-  // const [isFree, setIsFree] = useState(false);
   const initialValues = eventDefaultValues;
+  const router = useRouter();
+  const { startUpload } = useUploadThing("imageUploader");
+  const { user } = useUser();
+  const userId: string =
+    typeof user?.publicMetadata.userId === "string"
+      ? user.publicMetadata.userId
+      : "";
+  console.log(userId);
+
   const form = useForm<z.infer<typeof eventFormSchema>>({
     resolver: zodResolver(eventFormSchema),
     defaultValues: initialValues,
   });
 
-  function onSubmit(values: z.infer<typeof eventFormSchema>) {
+  async function onSubmit(values: z.infer<typeof eventFormSchema>) {
     console.log(values);
+    let uploadedImageUrl = values.imageUrl;
+
+    if (files.length > 0) {
+      const uploadedImages = await startUpload(files);
+
+      if (!uploadedImages) {
+        return;
+      }
+
+      uploadedImageUrl = uploadedImages[0].url;
+    }
+
+    if (type === "Create") {
+      try {
+        const newEvent = await createEvent({
+          event: { ...values, imageUrl: uploadedImageUrl },
+          userId,
+          path: "/profile",
+        });
+
+        if (newEvent) {
+          form.reset();
+          router.push(`/events/${newEvent._id}`);
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    }
   }
 
   const handleStartDateChange = (date: Date) => {
@@ -126,7 +165,7 @@ export const EventForm = ({ userId, type }: EventFormProps) => {
             {...form.register("imageUrl")}
           />  */}
 
-          {/* <FileUploader
+          <FileUploader
             imageUrl={form.watch("imageUrl")}
             onFieldChange={(value) => form.setValue("imageUrl", value)}
             setFiles={setFiles}
@@ -135,19 +174,19 @@ export const EventForm = ({ userId, type }: EventFormProps) => {
             <FormHelperText error>
               {form.formState.errors.imageUrl.message}
             </FormHelperText>
-          )} */}
-          <UploadButton
+          )}
+          {/* <UploadButton
             endpoint="imageUploader"
             onClientUploadComplete={(res) => {
-              // Do something with the response
-              console.log("Files: ", res);
+              console.log("Files: ", res[0].url);
+              form.setValue("imageUrl", res[0].url);
               alert("Upload Completed");
             }}
             onUploadError={(error: Error) => {
               // Do something with the error.
               alert(`ERROR! ${error.message}`);
             }}
-          />
+          /> */}
         </FormControl>
         <FormControl>
           <TextField
