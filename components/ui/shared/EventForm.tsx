@@ -6,6 +6,8 @@ import {
   FormHelperText,
   InputLabel,
   InputAdornment,
+  FormControlLabel,
+  Checkbox,
   TextField,
 } from "@mui/material";
 import { useForm } from "react-hook-form";
@@ -16,11 +18,12 @@ import Image from "next/image";
 import { eventFormSchema } from "@/lib/validator";
 import { eventDefaultValues } from "@/constants";
 import SelectItem from "./SelectItem";
-import { UploadButton } from "@/lib/utils";
+import { UploadButton } from "@/utils/uploadthings";
 import { FileDownload } from "@mui/icons-material";
 import FileUploader from "./FileUploader";
 import "react-datepicker/dist/react-datepicker.css";
-import { Event, LocationOn } from "@mui/icons-material";
+import { Event, LocationOn, AttachMoney } from "@mui/icons-material";
+import LinkIcon from "@mui/icons-material/Link";
 
 type EventFormProps = {
   userId: string;
@@ -33,14 +36,26 @@ export const EventForm = ({ userId, type }: EventFormProps) => {
   const [files, setFiles] = useState<File[]>([]);
   const [startDate, setStartDate] = useState(new Date());
   const [endDate, setEndDate] = useState(new Date());
+  // const [isFree, setIsFree] = useState(false);
   const initialValues = eventDefaultValues;
   const form = useForm<z.infer<typeof eventFormSchema>>({
     resolver: zodResolver(eventFormSchema),
     defaultValues: initialValues,
   });
+
   function onSubmit(values: z.infer<typeof eventFormSchema>) {
     console.log(values);
   }
+
+  const handleStartDateChange = (date: Date) => {
+    setStartDate(date);
+    form.setValue("startDateTime", date);
+  };
+
+  const handleEndDateChange = (date: Date) => {
+    setEndDate(date);
+    form.setValue("endDateTime", date);
+  };
   return (
     <>
       <form
@@ -56,7 +71,7 @@ export const EventForm = ({ userId, type }: EventFormProps) => {
         <FormControl>
           <TextField
             id="title"
-            // type="text"
+            type="text"
             fullWidth
             label="Event Title"
             variant="outlined"
@@ -65,9 +80,11 @@ export const EventForm = ({ userId, type }: EventFormProps) => {
             placeholder="Event Title"
             {...form.register("title")}
           />
-          {/* {form.errors.title && (
-            <FormHelperText error>{form.errors.title.message}</FormHelperText>
-          )} */}
+          {form.formState.errors.title && (
+            <FormHelperText error>
+              {form.formState.errors.title.message}
+            </FormHelperText>
+          )}
         </FormControl>
         <FormControl fullWidth>
           <SelectItem
@@ -89,9 +106,11 @@ export const EventForm = ({ userId, type }: EventFormProps) => {
             placeholder="Description"
             {...form.register("description")}
           />
-          {/* {form.errors.title && (
-            <FormHelperText error>{form.errors.title.message}</FormHelperText>
-          )} */}
+          {form.formState.errors.description && (
+            <FormHelperText error>
+              {form.formState.errors.description.message}
+            </FormHelperText>
+          )}
         </FormControl>
         <FormControl>
           {/* <TextField
@@ -107,15 +126,17 @@ export const EventForm = ({ userId, type }: EventFormProps) => {
             {...form.register("imageUrl")}
           />  */}
 
-          <FileUploader
+          {/* <FileUploader
             imageUrl={form.watch("imageUrl")}
             onFieldChange={(value) => form.setValue("imageUrl", value)}
             setFiles={setFiles}
           />
-          {/* {form.errors.title && (
-            <FormHelperText error>{form.errors.title.message}</FormHelperText>
-          )}
-          {/* <UploadButton
+          {form.formState.errors.imageUrl && (
+            <FormHelperText error>
+              {form.formState.errors.imageUrl.message}
+            </FormHelperText>
+          )} */}
+          <UploadButton
             endpoint="imageUploader"
             onClientUploadComplete={(res) => {
               // Do something with the response
@@ -126,7 +147,7 @@ export const EventForm = ({ userId, type }: EventFormProps) => {
               // Do something with the error.
               alert(`ERROR! ${error.message}`);
             }}
-          /> */}
+          />
         </FormControl>
         <FormControl>
           <TextField
@@ -147,12 +168,17 @@ export const EventForm = ({ userId, type }: EventFormProps) => {
               ),
             }}
           />
+          {form.formState.errors.location && (
+            <FormHelperText error>
+              {form.formState.errors.location.message}
+            </FormHelperText>
+          )}
         </FormControl>
         <FormControl>
           <DatePicker
             placeholderText="Start Date"
             selected={startDate}
-            onChange={(date: Date) => setStartDate(date)}
+            onChange={handleStartDateChange}
             showTimeSelect
             timeInputLabel="Time:"
             dateFormat="MM/dd/yyyy h:mm aa"
@@ -179,8 +205,8 @@ export const EventForm = ({ userId, type }: EventFormProps) => {
           <DatePicker
             placeholderText="End Date"
             selected={endDate}
-            onChange={(date: Date) => setEndDate(date)}
             showTimeSelect
+            onChange={handleEndDateChange}
             timeInputLabel="Time:"
             dateFormat="MM/dd/yyyy h:mm aa"
             wrapperClassName="datePicker"
@@ -201,8 +227,68 @@ export const EventForm = ({ userId, type }: EventFormProps) => {
             }
           />
         </FormControl>
-        <Button type="submit" variant="contained">
-          Submit
+        <FormControl>
+          <TextField
+            id="price"
+            type="number"
+            fullWidth
+            label="Price"
+            variant="outlined"
+            autoComplete="Price"
+            defaultValue={initialValues.price}
+            placeholder="Add price"
+            {...form.register("price")}
+            InputProps={{
+              endAdornment: (
+                <InputAdornment position="end">
+                  <FormControlLabel
+                    control={
+                      <Checkbox id="isFree" {...form.register("isFree")} />
+                    }
+                    label="Free Event"
+                  />
+                  <AttachMoney />
+                </InputAdornment>
+              ),
+            }}
+          />
+          {form.formState.errors.price && (
+            <FormHelperText error>
+              {form.formState.errors.price.message}
+            </FormHelperText>
+          )}
+        </FormControl>
+        <FormControl>
+          <TextField
+            id="url"
+            type="text"
+            fullWidth
+            label="URL"
+            variant="outlined"
+            autoComplete="URL"
+            defaultValue={initialValues.price}
+            placeholder="Add URL"
+            {...form.register("url")}
+            InputProps={{
+              endAdornment: (
+                <InputAdornment position="end">
+                  <LinkIcon />
+                </InputAdornment>
+              ),
+            }}
+          />
+          {form.formState.errors.url && (
+            <FormHelperText error>
+              {form.formState.errors.url.message}
+            </FormHelperText>
+          )}
+        </FormControl>
+        <Button
+          type="submit"
+          variant="contained"
+          disabled={form.formState.isSubmitting}
+        >
+          {form.formState.isSubmitting ? "Submit" : `${type} Event`}
         </Button>
       </form>
     </>

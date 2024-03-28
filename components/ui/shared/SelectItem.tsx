@@ -17,6 +17,10 @@ import {
 //   getAllCategories,
 // } from "@/lib/actions/category.actions";
 import { ICategory } from "@/lib/database/models/category.model";
+import {
+  createCategory,
+  getAllCategories,
+} from "@/lib/actions/category.actions";
 
 type DropdownProps = {
   value?: string;
@@ -30,18 +34,20 @@ const SelectItem = ({ value, onChangeHandler }: DropdownProps) => {
   const [openDialog, setOpenDialog] = useState(false);
 
   const handleAddCategory = () => {
-    // Here you can add the logic to handle adding the new category
-    setNewCategory(""); // Clear the new category input
-    setOpenDialog(false); // Close the dialog
+    createCategory({ categoryName: newCategory.trim() }).then((category) => {
+      setCategories((prevState) => [...prevState, category]);
+    });
+    setNewCategory("");
+    setOpenDialog(false);
   };
 
-  // useEffect(() => {
-  //   const getCategories = async () => {
-  //     const categoryList = await getAllCategories();
-  //     categoryList && setCategories(categoryList as ICategory[]);
-  //   };
-  //   getCategories();
-  // }, []);
+  useEffect(() => {
+    const getCategories = async () => {
+      const categoryList = await getAllCategories();
+      categoryList && setCategories(categoryList as ICategory[]);
+    };
+    getCategories();
+  }, []);
 
   return (
     <>
@@ -50,7 +56,6 @@ const SelectItem = ({ value, onChangeHandler }: DropdownProps) => {
         <Select
           labelId="category-select-label"
           id="category-select"
-          value={value}
           onChange={(e) =>
             onChangeHandler && onChangeHandler(e.target.value as string)
           }
@@ -61,11 +66,13 @@ const SelectItem = ({ value, onChangeHandler }: DropdownProps) => {
               {category.name}
             </MenuItem>
           ))}
-          <MenuItem onClick={() => setOpenDialog(true)}>Add Category</MenuItem>
+          <MenuItem onClick={() => setOpenDialog(true)}>
+            Add new category
+          </MenuItem>
         </Select>
       </FormControl>
       <Dialog open={openDialog} onClose={() => setOpenDialog(false)}>
-        <DialogTitle>Add New Category</DialogTitle>
+        <DialogTitle>Add new category</DialogTitle>
         <DialogContent>
           <FormControl fullWidth>
             <TextField
