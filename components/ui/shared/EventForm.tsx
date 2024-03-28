@@ -21,7 +21,6 @@ import { eventFormSchema } from "@/lib/validator";
 import { eventDefaultValues } from "@/constants";
 import SelectItem from "./SelectItem";
 import { UploadButton } from "@/utils/uploadthings";
-import { FileDownload } from "@mui/icons-material";
 import FileUploader from "./FileUploader";
 import { useUploadThing } from "@/utils/uploadthings";
 import { createEvent } from "@/lib/actions/event.actions";
@@ -47,7 +46,7 @@ export const EventForm = ({ type }: EventFormProps) => {
     typeof user?.publicMetadata.userId === "string"
       ? user.publicMetadata.userId
       : "";
-  console.log(userId);
+  // console.log(userId);
 
   const form = useForm<z.infer<typeof eventFormSchema>>({
     resolver: zodResolver(eventFormSchema),
@@ -152,19 +151,6 @@ export const EventForm = ({ type }: EventFormProps) => {
           )}
         </FormControl>
         <FormControl>
-          {/* <TextField
-            id="imageUrl"
-            fullWidth
-            label="Image"
-            variant="outlined"
-            multiline
-            rows={9}
-            // autoComplete="Description"
-            // defaultValue={initialValues.description}
-            placeholder="Upload image"
-            {...form.register("imageUrl")}
-          />  */}
-
           <FileUploader
             imageUrl={form.watch("imageUrl")}
             onFieldChange={(value) => form.setValue("imageUrl", value)}

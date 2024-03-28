@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import ButtonContained from "@/components/ui/ButtonContained";
 import { Typography, Box, Stack } from "@mui/material";
@@ -28,7 +28,10 @@ export default function Home() {
         <Stack
           sx={{ display: "flex", flexDirection: { sm: "column" }, gap: "20px" }}
         >
-          <Typography variant="h1" sx={{ fontSize: {lg:"50px", xs: "40px"} }}>
+          <Typography
+            variant="h1"
+            sx={{ fontSize: { lg: "50px", xs: "40px" } }}
+          >
             Craft unforgettable moments, seamlessly: elevate your events with
             our platform
           </Typography>
@@ -51,6 +54,7 @@ export default function Home() {
           alt="big event"
           width={500}
           height={500}
+          priority={true}
         />
       </Box>
       <Box

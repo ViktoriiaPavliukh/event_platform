@@ -27,14 +27,13 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   const isDarkModeEnabled = false;
-  console.log("Hi");
-  // const { user } = useUser();
-  // console.log(user);
   return (
     <ThemeProvider theme={isDarkModeEnabled ? darkTheme : lightTheme}>
       <ClerkProvider>
         <html lang="en">
-          <body className={inter.variable}>{children}</body>
+          <body suppressHydrationWarning={true} className={inter.variable}>
+            {children}
+          </body>
         </html>
       </ClerkProvider>
     </ThemeProvider>
