@@ -1,3 +1,5 @@
+"use client"
+
 import ButtonContained from "@/components/ui/ButtonContained";
 import { Typography, Box, Stack } from "@mui/material";
 import { Smokum } from "next/font/google";
