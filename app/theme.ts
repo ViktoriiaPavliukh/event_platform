@@ -9,6 +9,8 @@ const createThemeTemplate = (themeColor: ThemeColor): ThemeOptions => {
   const formColor = themeColor === "light" ? "#FFFFFF" : "#1E1E1E"; // Color for form elements
   const fontColorPrimary = themeColor === "light" ? "#000000" : "#000000";
 
+  const defaultColor = "#000000"; 
+
   return createTheme({
     components: {
       MuiFormControl: {
