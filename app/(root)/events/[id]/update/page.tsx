@@ -1,6 +1,6 @@
 import React from "react";
 import { auth } from "@clerk/nextjs";
-import EventForm from "@/components/ui/shared/EventForm";
+import EventForm from "@/components/shared/EventForm";
 import { Box, Typography } from "@mui/material";
 
 const UpdateEvent = () => {

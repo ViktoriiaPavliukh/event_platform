@@ -1,13 +1,20 @@
-"use client";
-
-import ButtonContained from "@/components/ui/ButtonContained";
-import { Typography, Box, Stack } from "@mui/material";
-import { Smokum } from "next/font/google";
+// "use client";
+import { Typography, Box, Stack, Button } from "@mui/material";
 import Image from "next/image";
 import Link from "next/link";
 import styles from "./../page.module.css";
+import Collections from "@/components/shared/Collections";
+import { getAllEvents } from "@/lib/actions/event.actions";
 
-export default function Home() {
+export default async function Home() {
+  const events = await getAllEvents({
+    query: "",
+    category: "",
+    page: 1,
+    limit: 6,
+  });
+
+  console.log(events);
   return (
     <>
       <Box
@@ -45,9 +52,9 @@ export default function Home() {
             written. Let EventSpot be your guide as you explore, connect, and
             create unforgettable memories together
           </Typography>
-          <ButtonContained>
+          <Button>
             <Link href="/">Explore now</Link>
-          </ButtonContained>
+          </Button>
         </Stack>
         <Image
           src="/assets/images/people.png"
@@ -75,6 +82,15 @@ export default function Home() {
         <Typography>Search</Typography>
         <Typography>Filter</Typography>
       </Box>
+      {/* <Collections
+        data={[]}
+        emptyTitle="No events found"
+        emptyStateSubtext="Come back later"
+        collectionType="All_events"
+        limit={6}
+        page={1}
+        totalPages={2}
+      /> */}
     </>
     // <main className={styles.main}>
     //   {/* <ButtonContained /> */}
