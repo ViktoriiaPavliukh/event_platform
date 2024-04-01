@@ -1,6 +1,5 @@
 import React from "react";
 import { auth } from "@clerk/nextjs";
-import { useUser } from "@clerk/nextjs";
 import EventForm from "@/components/shared/EventForm";
 import { Box, Typography } from "@mui/material";
 

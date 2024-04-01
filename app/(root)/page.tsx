@@ -82,15 +82,15 @@ export default async function Home() {
         <Typography>Search</Typography>
         <Typography>Filter</Typography>
       </Box>
-      {/* <Collections
-        data={[]}
+      <Collections
+        data={events?.data}
         emptyTitle="No events found"
         emptyStateSubtext="Come back later"
         collectionType="All_events"
         limit={6}
         page={1}
         totalPages={2}
-      /> */}
+      />
     </>
     // <main className={styles.main}>
     //   {/* <ButtonContained /> */}

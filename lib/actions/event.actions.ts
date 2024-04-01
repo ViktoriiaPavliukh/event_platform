@@ -1,6 +1,6 @@
 "use server";
-
-import { CreateEventParams, GetAllEventsParams } from "@/types";
+import { revalidatePath } from "next/cache";
+import { CreateEventParams, GetAllEventsParams, DeleteEventParams } from "@/types";
 import { handleError } from "../utils";
 import { connectToDatabase } from "../database";
 import User from "../database/models/user.model";
@@ -51,24 +51,40 @@ export async function getEventById(eventId: string) {
   }
 }
 
-
-export async function getAllEvents({query, limit = 6, page, category} : GetAllEventsParams) {
+export async function getAllEvents({
+  query,
+  limit = 6,
+  page,
+  category,
+}: GetAllEventsParams) {
   try {
     await connectToDatabase();
-    const skipAmount = (Number(page) - 1) * limit;
+    // const skipAmount = (Number(page) - 1) * limit;
     const conditions = {};
     const eventsQuery = Event.find(conditions)
       .sort({ createdAt: "desc" })
-      .skip(skipAmount)
+      // .skip(skipAmount)
+      .skip(0)
       .limit(limit);
 
     const events = await populateEvent(eventsQuery);
     const eventsCount = await Event.countDocuments(conditions);
 
-    return  {
+    return {
       data: JSON.parse(JSON.stringify(events)),
-      totalPages: Math.ceil(eventsCount / limit)
-    }
+      totalPages: Math.ceil(eventsCount / limit),
+    };
+  } catch (error) {
+    handleError(error);
+  }
+}
+
+export async function deleteEvent({ eventId, path }: DeleteEventParams) {
+  try {
+    await connectToDatabase();
+
+    const deletedEvent = await Event.findByIdAndDelete(eventId);
+    if (deletedEvent) revalidatePath(path);
   } catch (error) {
     handleError(error);
   }
