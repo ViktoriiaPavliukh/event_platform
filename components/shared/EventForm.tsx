@@ -23,22 +23,30 @@ import SelectItem from "./SelectItem";
 import { UploadButton } from "@/utils/uploadthings";
 import FileUploader from "./FileUploader";
 import { useUploadThing } from "@/utils/uploadthings";
-import { createEvent } from "@/lib/actions/event.actions";
+import { createEvent, updateEvent } from "@/lib/actions/event.actions";
 import "react-datepicker/dist/react-datepicker.css";
 import { useUser } from "@clerk/nextjs";
+import { IEvent } from "@/lib/database/models/event.model";
 
 type EventFormProps = {
   userId?: string;
   type: "Create" | "Update";
-  // event?: IEvent;
-  // eventId?: string;
+  event?: IEvent;
+  eventId?: string;
 };
 
-export const EventForm = ({ type }: EventFormProps) => {
+export const EventForm = ({ type, event, eventId }: EventFormProps) => {
   const [files, setFiles] = useState<File[]>([]);
   const [startDate, setStartDate] = useState(new Date());
   const [endDate, setEndDate] = useState(new Date());
-  const initialValues = eventDefaultValues;
+  const initialValues =
+    event && type === "Update"
+      ? {
+          ...event,
+          startDateTime: new Date(event.startDateTime),
+          endDateTime: new Date(event.endDateTime),
+        }
+      : eventDefaultValues;
   const router = useRouter();
   const { startUpload } = useUploadThing("imageUploader");
   const { user } = useUser();
@@ -78,6 +86,28 @@ export const EventForm = ({ type }: EventFormProps) => {
         if (newEvent) {
           form.reset();
           router.push(`/events/${newEvent._id}`);
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    }
+
+    if (type === "Update") {
+      if (!eventId) {
+        router.back();
+        return;
+      }
+
+      try {
+        const updatedEvent = await updateEvent({
+          userId,
+          event: { ...values, imageUrl: uploadedImageUrl, _id: eventId },
+          path: `/events/${eventId}`,
+        });
+
+        if (updatedEvent) {
+          form.reset();
+          router.push(`/events/${updatedEvent._id}`);
         }
       } catch (error) {
         console.log(error);
