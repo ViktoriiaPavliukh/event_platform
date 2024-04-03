@@ -29,13 +29,26 @@ const Collections = ({
       {data.length > 0 ? (
         <Box>
           {" "}
-          <List component="ul">
+          <List
+            component="ul"
+            sx={{
+              display: "flex",
+              width: "100%",
+              flexWrap: "wrap",
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          >
             {data.map((event) => {
               const hasOrderLink = collectionType === "Events_Organised";
               const hidePrice = collectionType === "My_tickets";
 
               return (
-                <ListItem component="li" key={event._id}>
+                <ListItem
+                  component="li"
+                  key={event._id}
+                  sx={{ display: "flex", width: "fit-content" }}
+                >
                   <Card
                     event={event}
                     hasOrderLink={hasOrderLink}
@@ -44,15 +57,6 @@ const Collections = ({
                 </ListItem>
               );
             })}
-            {/* <ListItem component="li">
-              <ListItemText primary="Item 1" />
-            </ListItem>
-            <ListItem component="li">
-              <ListItemText primary="Item 2" />
-            </ListItem>
-            <ListItem component="li">
-              <ListItemText primary="Item 3" />
-            </ListItem> */}
           </List>
         </Box>
       ) : (
