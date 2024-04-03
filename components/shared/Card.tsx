@@ -23,18 +23,27 @@ const Card = ({ event, hasOrderLink, hidePrice }: CardProps) => {
 
   const isEventCreator = userId === event.organiser._id.toString();
   return (
-    <Box>
-      {isEventCreator && !hidePrice && (
-        <Box>
-          <Link href={`/events/${event._id}/update`}>
-            <EditNoteIcon />
-          </Link>
-          <DeleteModal eventId={event._id} />
-        </Box>
-      )}
+    <Box
+      sx={{
+        display: "flex",
+        gap: "10px",
+        width: { xs: "300px", sm: "350px" },
+        height: "400px",
+        padding: "20px",
+        backgroundColor: "#f8f4f0",
+        borderRadius: "12px",
+      }}
+    >
       <Link href={`/events/${event._id}`}>
         {!hidePrice && (
           <Box>
+            <Image
+              src={event.imageUrl}
+              alt="hero image"
+              width={300}
+              height={300}
+              layout="responsive"
+            />
             <Typography>{event.isFree ? "Free" : `${event.price}`}</Typography>
             <Typography>{event.category.name}</Typography>
           </Box>
@@ -56,6 +65,14 @@ const Card = ({ event, hasOrderLink, hidePrice }: CardProps) => {
           </Link>
         )}
       </Link>
+      {isEventCreator && !hidePrice && (
+        <Box sx={{ display: "flex", flexDirection: "column" }}>
+          <Link href={`/events/${event._id}/update`}>
+            <EditNoteIcon sx={{ paddingLeft: "3px" }} />
+          </Link>
+          <DeleteModal eventId={event._id} />
+        </Box>
+      )}
     </Box>
   );
 };

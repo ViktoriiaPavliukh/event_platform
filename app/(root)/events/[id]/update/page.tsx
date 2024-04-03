@@ -19,7 +19,7 @@ const UpdateEvent = async ({ params: { id } }: UpdateEventProps) => {
     <>
       <Box>
         <Typography variant="h4">Update Event</Typography>
-        <EventForm userId={userId} eventId={event._id} event={event} type="Update" />
+        {/* <EventForm userId={userId} eventId={event._id} event={event} type="Update" /> */}
       </Box>
       ;
     </>

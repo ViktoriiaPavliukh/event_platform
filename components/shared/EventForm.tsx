@@ -191,18 +191,6 @@ export const EventForm = ({ type, event, eventId }: EventFormProps) => {
               {form.formState.errors.imageUrl.message}
             </FormHelperText>
           )}
-          {/* <UploadButton
-            endpoint="imageUploader"
-            onClientUploadComplete={(res) => {
-              console.log("Files: ", res[0].url);
-              form.setValue("imageUrl", res[0].url);
-              alert("Upload Completed");
-            }}
-            onUploadError={(error: Error) => {
-              // Do something with the error.
-              alert(`ERROR! ${error.message}`);
-            }}
-          /> */}
         </FormControl>
         <FormControl>
           <TextField
