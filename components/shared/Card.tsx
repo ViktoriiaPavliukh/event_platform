@@ -1,6 +1,7 @@
 import React from "react";
-import { Box, Typography } from "@mui/material";
+import { Box, Typography, Stack } from "@mui/material";
 import EditNoteIcon from "@mui/icons-material/EditNote";
+import ArrowOutwardIcon from "@mui/icons-material/ArrowOutward";
 import Link from "next/link";
 import Image from "next/image";
 import { IEvent } from "@/lib/database/models/event.model";
@@ -43,27 +44,46 @@ const Card = ({ event, hasOrderLink, hidePrice }: CardProps) => {
               width={300}
               height={300}
               layout="responsive"
+              priority={true}
             />
-            <Typography>{event.isFree ? "Free" : `${event.price}`}</Typography>
-            <Typography>{event.category.name}</Typography>
+            <Stack
+              sx={{
+                display: "flex",
+                flexDirection: "row",
+                justifyContent: "space-between",
+                alignItems: "center",
+              }}
+            >
+              {" "}
+              <Typography>
+                {event.isFree ? "Free" : `${event.price}`}
+              </Typography>
+              <Typography>{event.category.name}</Typography>
+            </Stack>
           </Box>
         )}
         <Typography>{formatDateTime(event.startDateTime).dateTime}</Typography>
         <Typography>{event.title}</Typography>
-        <Typography>
-          {event.organiser.firstName} {event.organiser.lastName}
-        </Typography>
-        {hasOrderLink && (
-          <Link href={`/orders?eventId=${event._id}`}>
-            <Typography>Order Details</Typography>
-            <Image
-              src="/assets/icons/arrow.svg "
-              alt="search"
-              width={10}
-              height={10}
-            />
-          </Link>
-        )}
+        <Stack
+          sx={{
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "left",
+            alignItems: "left",
+          }}
+        >
+          <Typography>
+            {event.organiser.firstName} {event.organiser.lastName}
+          </Typography>
+          {hasOrderLink && (
+            <Link href={`/orders?eventId=${event._id}`}>
+              <Box sx={{ display: "flex" }}>
+                <Typography>Order Details</Typography>
+                <ArrowOutwardIcon />
+              </Box>
+            </Link>
+          )}
+        </Stack>
       </Link>
       {isEventCreator && !hidePrice && (
         <Box sx={{ display: "flex", flexDirection: "column" }}>

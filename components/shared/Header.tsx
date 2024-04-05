@@ -36,7 +36,6 @@ const Header: React.FC<Props> = (props) => {
   const { window } = props;
   const [mobileOpen, setMobileOpen] = React.useState(false);
   const pathname = usePathname();
-  console.log(pathname);
 
   const handleDrawerToggle = () => {
     setMobileOpen((prevState) => !prevState);
@@ -76,7 +75,7 @@ const Header: React.FC<Props> = (props) => {
   const container =
     window !== undefined ? () => window().document.body : undefined;
   const { user } = useUser();
-  // console.log(user?.publicMetadata.userId);
+  console.log(user?.publicMetadata.userId);
 
   return (
     <Box
