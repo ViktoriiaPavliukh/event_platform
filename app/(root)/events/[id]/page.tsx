@@ -4,18 +4,18 @@ import {
 } from "@/lib/actions/event.actions";
 import { formatDateTime } from "@/lib/utils";
 import { SearchParamProps } from "@/types";
-import { Typography, Box, Stack, Button } from "@mui/material";
+import { Typography, Box, Stack } from "@mui/material";
 import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
 import Image from "next/image";
 import Link from "next/link";
 import { LocationOn } from "@mui/icons-material";
 import Collections from "@/components/shared/Collections";
+import PaymentButton from "@/components/shared/PaymentButton";
 
 const EventDetails = async ({
   params: { id },
   searchParams,
 }: SearchParamProps) => {
-  console.log(id);
   const event = await getEventById(id);
 
   const relatedEvents = await getRelatedEventsByCategory({
@@ -148,7 +148,7 @@ const EventDetails = async ({
           <Typography>
             {event.organiser.firstName} {event.organiser.lastName}
           </Typography>
-          {/* <Button>Buy Ticket</Button> */}
+          <PaymentButton event={event} />
         </Box>
       </Box>
       <Box>
