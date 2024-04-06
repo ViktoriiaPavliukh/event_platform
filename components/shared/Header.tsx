@@ -75,7 +75,6 @@ const Header: React.FC<Props> = (props) => {
   const container =
     window !== undefined ? () => window().document.body : undefined;
   const { user } = useUser();
-  console.log(user?.publicMetadata.userId);
 
   return (
     <Box

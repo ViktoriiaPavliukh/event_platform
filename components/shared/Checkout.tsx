@@ -7,7 +7,7 @@ import { checkoutOrder } from "@/lib/actions/order.actions";
 loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!);
 
 const Checkout = ({ event, userId }: { event: IEvent; userId: string }) => {
-
+  console.log(userId);
   useEffect(() => {
     const query = new URLSearchParams(window.location.search);
     if (query.get("success")) {
@@ -20,7 +20,7 @@ const Checkout = ({ event, userId }: { event: IEvent; userId: string }) => {
       );
     }
   }, []);
- 
+
   const onCheckout = async () => {
     const order = {
       eventTitle: event.title,
@@ -32,10 +32,9 @@ const Checkout = ({ event, userId }: { event: IEvent; userId: string }) => {
 
     await checkoutOrder(order);
   };
-  
 
   return (
-    <form action={onCheckout} method="POST">
+    <form method="POST" action={onCheckout}>
       <Button type="submit" variant="contained" color="primary" size="large">
         {event.isFree ? "Get Ticket" : "Buy Ticket"}
       </Button>

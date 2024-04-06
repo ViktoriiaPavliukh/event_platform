@@ -35,9 +35,11 @@ const Card = ({ event, hasOrderLink, hidePrice }: CardProps) => {
         borderRadius: "12px",
       }}
     >
-      <Link href={`/events/${event._id}`}>
+      {/* <Link href={`/events/${event._id}`}> */}
+      <Box>
         {!hidePrice && (
           <Box>
+             <Link href={`/events/${event._id}`}>
             <Image
               src={event.imageUrl}
               alt="hero image"
@@ -46,6 +48,7 @@ const Card = ({ event, hasOrderLink, hidePrice }: CardProps) => {
               layout="responsive"
               priority={true}
             />
+            </Link>
             <Stack
               sx={{
                 display: "flex",
@@ -63,7 +66,9 @@ const Card = ({ event, hasOrderLink, hidePrice }: CardProps) => {
           </Box>
         )}
         <Typography>{formatDateTime(event.startDateTime).dateTime}</Typography>
-        <Typography>{event.title}</Typography>
+        <Link href={`/events/${event._id}`}>
+          <Typography>{event.title}</Typography>
+        </Link>
         <Stack
           sx={{
             display: "flex",
@@ -84,7 +89,8 @@ const Card = ({ event, hasOrderLink, hidePrice }: CardProps) => {
             </Link>
           )}
         </Stack>
-      </Link>
+        {/* </Link> */}
+      </Box>
       {isEventCreator && !hidePrice && (
         <Box sx={{ display: "flex", flexDirection: "column" }}>
           <Link href={`/events/${event._id}/update`}>

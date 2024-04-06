@@ -9,9 +9,8 @@ import Checkout from "./Checkout";
 const PaymentButton = ({ event }: { event: IEvent }) => {
   const { user } = useUser();
   const userId = user?.publicMetadata.userId as string;
-  console.log(userId);
   const hasEventFinished = new Date(event.endDateTime) < new Date();
-
+  console.log(userId);
   return (
     <Box>
       {hasEventFinished ? (
@@ -24,7 +23,7 @@ const PaymentButton = ({ event }: { event: IEvent }) => {
             </Button>
           </SignedOut>
           <SignedIn>
-            <Checkout event={event} userId={userId}/>
+            <Checkout event={event} userId={userId} />
           </SignedIn>
         </>
       )}

@@ -10,7 +10,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { LocationOn } from "@mui/icons-material";
 import Collections from "@/components/shared/Collections";
-import PaymentButton from "@/components/shared/PaymentButton";
+import PaymentButton from "../../../../components/shared/PaymentButton";
 
 const EventDetails = async ({
   params: { id },
@@ -135,13 +135,7 @@ const EventDetails = async ({
             <Typography>{event.description}</Typography>
             {event.url && (
               <Link href={event.url} passHref>
-                <Typography
-                  component="a"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  {event.url}
-                </Typography>
+                <Typography>{event.url}</Typography>
               </Link>
             )}
           </Box>
