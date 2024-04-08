@@ -5,6 +5,7 @@ import ArrowOutwardIcon from "@mui/icons-material/ArrowOutward";
 import Link from "next/link";
 import Image from "next/image";
 import { IEvent } from "@/lib/database/models/event.model";
+// import { IOrder } from "@/lib/database/models/order.model";
 import { formatDateTime } from "@/lib/utils";
 import { useUser } from "@clerk/nextjs";
 import DeleteModal from "./DeleteModal";
@@ -39,15 +40,15 @@ const Card = ({ event, hasOrderLink, hidePrice }: CardProps) => {
       <Box>
         {!hidePrice && (
           <Box>
-             <Link href={`/events/${event._id}`}>
-            <Image
-              src={event.imageUrl}
-              alt="hero image"
-              width={300}
-              height={300}
-              layout="responsive"
-              priority={true}
-            />
+            <Link href={`/events/${event._id}`}>
+              <Image
+                src={event.imageUrl}
+                alt="hero image"
+                width={300}
+                height={300}
+                layout="responsive"
+                priority={true}
+              />
             </Link>
             <Stack
               sx={{

@@ -1,7 +1,7 @@
 "use client";
 import React from "react";
 import { IEvent } from "@/lib/database/models/event.model";
-import { Box, Typography, List, ListItem, ListItemText } from "@mui/material";
+import { Box, Typography, List, ListItem } from "@mui/material";
 import Card from "./Card";
 
 type CollectionProps = {
@@ -24,9 +24,10 @@ const Collections = ({
   collectionType,
   urlParamName,
 }: CollectionProps) => {
+  console.log(data);
   return (
     <>
-      {data.length > 0 ? (
+      {data && data.length > 0 ? (
         <Box>
           {" "}
           <List
