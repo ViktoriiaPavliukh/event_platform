@@ -3,6 +3,7 @@ import React from "react";
 import { IEvent } from "@/lib/database/models/event.model";
 import { Box, Typography, List, ListItem } from "@mui/material";
 import Card from "./Card";
+import Pagination from "./Pagination";
 
 type CollectionProps = {
   data: IEvent[];
@@ -24,7 +25,7 @@ const Collections = ({
   collectionType,
   urlParamName,
 }: CollectionProps) => {
-  console.log(data);
+  
   return (
     <>
       {data && data.length > 0 ? (
@@ -59,6 +60,13 @@ const Collections = ({
               );
             })}
           </List>
+          {totalPages > 1 && (
+            <Pagination
+              urlParamName={urlParamName}
+              page={page}
+              totalPages={totalPages}
+            />
+          )}
         </Box>
       ) : (
         <Box

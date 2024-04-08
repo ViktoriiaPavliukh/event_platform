@@ -2,18 +2,24 @@
 import { Typography, Box, Stack, Button } from "@mui/material";
 import Image from "next/image";
 import Link from "next/link";
+import Search from "@/components/shared/Search";
+import CategoryFilter from "@/components/shared/CategoryFilter";
 import styles from "./../page.module.css";
 import Collections from "@/components/shared/Collections";
 import { getAllEvents } from "@/lib/actions/event.actions";
+import { SearchParamProps } from "@/types";
 
-export default async function Home() {
+export default async function Home({ searchParams }: SearchParamProps) {
+  const page = Number(searchParams?.page) || 1;
+  const searchText = (searchParams?.query as string) || "";
+  const category = (searchParams?.category as string) || "";
   const events = await getAllEvents({
-    query: "",
-    category: "",
-    page: 1,
+    query: searchText,
+    category,
+    page,
     limit: 6,
   });
-  
+
   return (
     <>
       <Box
@@ -78,8 +84,8 @@ export default async function Home() {
           gap: "60px",
         }}
       >
-        <Typography>Search</Typography>
-        <Typography>Filter</Typography>
+        <Search />
+        <CategoryFilter />
       </Box>
       <Collections
         data={events?.data}
@@ -87,8 +93,8 @@ export default async function Home() {
         emptyStateSubtext="Come back later"
         collectionType="All_events"
         limit={6}
-        page={1}
-        totalPages={2}
+        page={page}
+        totalPages={events?.totalPages}
       />
     </>
     // <main className={styles.main}>
