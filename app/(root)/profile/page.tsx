@@ -8,25 +8,34 @@ import { IOrder } from "@/lib/database/models/order.model";
 import { IEvent } from "@/lib/database/models/event.model";
 import { useUser } from "@clerk/nextjs";
 import Link from "next/link";
+import { SearchParamProps } from "@/types";
 
-const Profile = () => {
+const Profile = ({ searchParams }: SearchParamProps) => {
   const { user } = useUser();
   const userId =
     typeof user?.publicMetadata.userId === "string"
       ? user.publicMetadata.userId
       : "";
 
-  const [orderedEvents, setOrderedEvents] = useState<IEvent[]>([]); // Use IEvent instead of IOrder
+  const [orderedEvents, setOrderedEvents] = useState<IEvent[]>([]);
   const [organizedEvents, setOrganizedEvents] = useState<any>(null);
-  const [ordersPage, setOrdersPage] = useState<number>(1);
-  const [eventsPage, setEventsPage] = useState<number>(1);
+  const [orderedEventsTotalPages, setOrderedEventsTotalPages] =
+    useState<number>(0);
+  const [organizedEventsTotalPages, setOrganizedEventsTotalPages] =
+    useState<number>(0);
+  // const [ordersPage, setOrdersPage] = useState<number>(1);
+  // const [eventsPage, setEventsPage] = useState<number>(1);
+
+  const ordersPage = Number(searchParams?.ordersPage) || 1;
+  const eventsPage = Number(searchParams?.eventsPage) || 1;
 
   useEffect(() => {
     const fetchOrders = async () => {
       if (userId) {
         const orders = await getOrdersByUser({ userId, page: ordersPage });
-        const events = orders?.data.map((order: IOrder) => order.event) || []; // Extract event information from orders
-        setOrderedEvents(events); // Set the mapped events
+        const events = orders?.data.map((order: IOrder) => order.event) || [];
+        setOrderedEvents(events);
+        setOrderedEventsTotalPages(orders?.totalPages || 1);
       }
     };
 
@@ -38,6 +47,7 @@ const Profile = () => {
       if (userId) {
         const events = await getEventsByUser({ userId, page: eventsPage });
         setOrganizedEvents(events || null);
+        setOrganizedEventsTotalPages(events?.totalPages || 1);
       }
     };
 
@@ -77,14 +87,14 @@ const Profile = () => {
           </Button>
         </Box>
         <Collections
-          data={orderedEvents} 
+          data={orderedEvents}
           emptyTitle="No event tickets purchased yet"
           emptyStateSubtext="No worries - plenty of exciting events to explore!"
           collectionType="My_tickets"
           limit={3}
           page={ordersPage}
           urlParamName="ordersPage"
-          totalPages={2}
+          totalPages={orderedEventsTotalPages}
         />
         <Box
           sx={{
@@ -120,4 +130,3 @@ const Profile = () => {
 };
 
 export default Profile;
-
