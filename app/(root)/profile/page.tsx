@@ -23,8 +23,6 @@ const Profile = ({ searchParams }: SearchParamProps) => {
     useState<number>(0);
   const [organizedEventsTotalPages, setOrganizedEventsTotalPages] =
     useState<number>(0);
-  // const [ordersPage, setOrdersPage] = useState<number>(1);
-  // const [eventsPage, setEventsPage] = useState<number>(1);
 
   const ordersPage = Number(searchParams?.ordersPage) || 1;
   const eventsPage = Number(searchParams?.eventsPage) || 1;
@@ -122,7 +120,7 @@ const Profile = ({ searchParams }: SearchParamProps) => {
           limit={3}
           page={eventsPage}
           urlParamName="eventsPage"
-          totalPages={2}
+          totalPages={organizedEventsTotalPages}
         />
       </Box>
     </>

@@ -12,10 +12,6 @@ import {
   FormControl,
   TextField,
 } from "@mui/material";
-// import {
-//   createCategory,
-//   getAllCategories,
-// } from "@/lib/actions/category.actions";
 import { ICategory } from "@/lib/database/models/category.model";
 import {
   createCategory,

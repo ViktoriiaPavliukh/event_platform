@@ -5,7 +5,6 @@ import ArrowOutwardIcon from "@mui/icons-material/ArrowOutward";
 import Link from "next/link";
 import Image from "next/image";
 import { IEvent } from "@/lib/database/models/event.model";
-// import { IOrder } from "@/lib/database/models/order.model";
 import { formatDateTime } from "@/lib/utils";
 import { useUser } from "@clerk/nextjs";
 import DeleteModal from "./DeleteModal";
