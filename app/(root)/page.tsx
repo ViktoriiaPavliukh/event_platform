@@ -3,6 +3,7 @@ import { Typography, Box, Stack, Button } from "@mui/material";
 import Image from "next/image";
 import Link from "next/link";
 import Search from "@/components/shared/Search";
+import CategoryFilter from "@/components/shared/CategoryFilter";
 import styles from "./../page.module.css";
 import Collections from "@/components/shared/Collections";
 import { getAllEvents } from "@/lib/actions/event.actions";
@@ -84,7 +85,7 @@ export default async function Home({ searchParams }: SearchParamProps) {
         }}
       >
         <Search />
-        <Typography>Filter</Typography>
+        <CategoryFilter />
       </Box>
       <Collections
         data={events?.data}
