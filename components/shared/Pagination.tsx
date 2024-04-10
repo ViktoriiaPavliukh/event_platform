@@ -29,7 +29,15 @@ const Pagination = ({ page, totalPages, urlParamName }: PaginationProps) => {
   };
 
   return (
-    <Box>
+    <Box
+      sx={{
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "flex",
+        gap: "20px",
+        py: "40px",
+      }}
+    >
       <Button
         variant="contained"
         onClick={() => onClick("prev")}

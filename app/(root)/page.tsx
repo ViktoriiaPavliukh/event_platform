@@ -1,4 +1,3 @@
-// "use client";
 import { Typography, Box, Stack, Button } from "@mui/material";
 import Image from "next/image";
 import Link from "next/link";
@@ -42,7 +41,7 @@ export default async function Home({ searchParams }: SearchParamProps) {
         >
           <Typography
             variant="h1"
-            sx={{ fontSize: { lg: "50px", xs: "40px" } }}
+            sx={{ fontSize: { lg: "50px", xs: "30px" } }}
           >
             Craft unforgettable moments, seamlessly: elevate your events with
             our platform
@@ -57,9 +56,9 @@ export default async function Home({ searchParams }: SearchParamProps) {
             written. Let EventSpot be your guide as you explore, connect, and
             create unforgettable memories together
           </Typography>
-          <Button>
-            <Link href="/">Explore now</Link>
-          </Button>
+          <Link href="/">
+            <Button>Explore now</Button>
+          </Link>
         </Stack>
         <Image
           src="/assets/images/people.png"
@@ -73,15 +72,14 @@ export default async function Home({ searchParams }: SearchParamProps) {
         sx={{
           display: "flex",
           height: "100%",
-          paddingX: "60px",
-          paddingBottom: "60px",
+          p: "60px",
           flexDirection: {
             xs: "column",
             md: "row",
             justifyContent: "center",
             alignItems: "center",
           },
-          gap: "60px",
+          gap: "40px",
         }}
       >
         <Search />

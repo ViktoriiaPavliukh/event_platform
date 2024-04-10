@@ -17,11 +17,22 @@ const UpdateEvent = async ({ params: { id } }: UpdateEventProps) => {
   const event = await getEventById(id);
   return (
     <>
-      <Box>
+      <Box
+        sx={{
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "center",
+          alignItems: "center",
+        }}
+      >
         <Typography variant="h4">Update Event</Typography>
-        {/* <EventForm userId={userId} eventId={event._id} event={event} type="Update" /> */}
+        <EventForm
+          userId={userId}
+          eventId={event._id}
+          event={event}
+          type="Update"
+        />
       </Box>
-      ;
     </>
   );
 };

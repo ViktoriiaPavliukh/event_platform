@@ -38,11 +38,12 @@ const Search = ({
   }, [query, searchParams, router]);
 
   return (
-    <Box>
+    <Box sx={{ display: "flex" }}>
       <TextField
         variant="outlined"
         placeholder={placeholder}
         value={query}
+        sx={{ display: "flex", width: { xs: "87vw", md: "45vw" } }}
         onChange={(e) => setQuery(e.target.value)}
         InputProps={{
           startAdornment: (

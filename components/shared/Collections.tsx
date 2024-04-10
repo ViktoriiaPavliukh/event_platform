@@ -25,7 +25,6 @@ const Collections = ({
   collectionType,
   urlParamName,
 }: CollectionProps) => {
-  
   return (
     <>
       {data && data.length > 0 ? (
@@ -48,7 +47,7 @@ const Collections = ({
               return (
                 <ListItem
                   component="li"
-                  key={event._id}
+                  key={event?._id}
                   sx={{ display: "flex", width: "fit-content" }}
                 >
                   <Card
