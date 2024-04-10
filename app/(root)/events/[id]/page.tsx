@@ -48,13 +48,19 @@ const EventDetails = async ({
           }}
         >
           <Typography variant="h3">{event.title}</Typography>
-          <Image
-            src={event.imageUrl}
-            alt="hero image"
-            width={500}
-            height={500}
-            layout="responsive"
-          />
+          <Box
+            sx={{
+              width: { xs: "100%", md: "80%", lg: "70%" },
+            }}
+          >
+            <Image
+              src={event.imageUrl}
+              alt="hero image"
+              width={500}
+              height={500}
+              layout="responsive"
+            />
+          </Box>
           <Stack
             sx={{
               display: "flex",
@@ -104,8 +110,8 @@ const EventDetails = async ({
                   display: "flex",
                   flexDirection: "column",
                   gap: "6px",
-                  justifyContent: "end",
-                  alignItems: "center",
+                  justifyContent: "start",
+                  alignItems: "start",
                 }}
               >
                 <Typography>
@@ -145,7 +151,15 @@ const EventDetails = async ({
           <PaymentButton event={event} />
         </Box>
       </Box>
-      <Box>
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          flexDirection: "column",
+          py: "40px",
+        }}
+      >
         <Typography variant="h4">Related Events</Typography>
         <Collections
           data={relatedEvents?.data}

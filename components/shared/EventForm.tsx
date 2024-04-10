@@ -4,7 +4,7 @@ import {
   Button,
   FormControl,
   FormHelperText,
-  InputLabel,
+  Box,
   InputAdornment,
   FormControlLabel,
   Checkbox,
@@ -180,17 +180,23 @@ export const EventForm = ({ type, event, eventId }: EventFormProps) => {
             </FormHelperText>
           )}
         </FormControl>
-        <FormControl>
-          <FileUploader
-            imageUrl={form.watch("imageUrl")}
-            onFieldChange={(value) => form.setValue("imageUrl", value)}
-            setFiles={setFiles}
-          />
-          {form.formState.errors.imageUrl && (
-            <FormHelperText error>
-              {form.formState.errors.imageUrl.message}
-            </FormHelperText>
-          )}
+        <FormControl
+          sx={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
+            <FileUploader
+              imageUrl={form.watch("imageUrl")}
+              onFieldChange={(value) => form.setValue("imageUrl", value)}
+              setFiles={setFiles}
+            />
+            {form.formState.errors.imageUrl && (
+              <FormHelperText error>
+                {form.formState.errors.imageUrl.message}
+              </FormHelperText>
+            )}
         </FormControl>
         <FormControl>
           <TextField

@@ -1,22 +1,57 @@
 "use client";
-import { createTheme, ThemeOptions } from "@mui/material/styles";
+import { createTheme, Theme } from "@mui/material/styles";
 
 type ThemeColor = "light" | "dark";
 
-const createThemeTemplate = (themeColor: ThemeColor): ThemeOptions => {
-  // const primaryColor = themeColor === "light" ? "#f8f4f0" : "#300B31";
-  const primaryColor = themeColor === "light" ? "#300B31" : "#300B31";
-  const formColor = themeColor === "light" ? "#FFFFFF" : "#1E1E1E"; // Color for form elements
-  const fontColorPrimary = themeColor === "light" ? "#000000" : "#000000";
+const createThemeTemplate = (themeColor: ThemeColor): Theme => {
+  const primaryColor = themeColor === "light" ? "#d3cbc5" : "#000";
+  const bgColor = themeColor === "light" ? "#d3cbc5" : "#000";
+  const formColor = themeColor === "light" ? "#FFFFFF" : "#1E1E1E";
+  const fontColorPrimary = themeColor === "light" ? "#1b1a1a" : "#FFF";
+  const fontColorSecondary = themeColor === "light" ? "#FFF" : "#1b1a1a";
+  const btnHover = themeColor === "light" ? "#cbc3bd" : "#FFF";
 
-  const defaultColor = "#000000"; 
+  const defaultColor = "#1b1a1a";
 
   return createTheme({
     components: {
       MuiFormControl: {
         styleOverrides: {
           root: {
-            backgroundColor: formColor, // Change background color of form control
+            backgroundColor: formColor,
+          },
+        },
+      },
+      MuiButton: {
+        styleOverrides: {
+          root: {
+            color: themeColor === "light" ? "#1b1a1a" : "#FFF", // Default button text color
+            backgroundColor: primaryColor, // Default button background color
+            "&:hover": {
+              backgroundColor: btnHover,
+              color: fontColorSecondary,
+            },
+          },
+          contained: {
+            boxShadow: "none", // Remove button box shadow
+          },
+        },
+      },
+      MuiSwitch: {
+        styleOverrides: {
+          root: {
+            color: themeColor === "light" ? "#FFF" : "#FFF", // Default color for the switch button
+          },
+          thumb: {
+            color: themeColor === "light" ? "#FFF" : "#FFF", // Default color for the switch thumb
+          },
+          track: {
+            backgroundColor: themeColor === "light" ? "#FFF" : "#FFF", // Default background color for the switch track
+          },
+          switchBase: {
+            "&.Mui-checked": {
+              color: themeColor === "light" ? "#FFF" : "#FFF", // Color for the switch button when checked
+            },
           },
         },
       },
@@ -49,6 +84,9 @@ const createThemeTemplate = (themeColor: ThemeColor): ThemeOptions => {
       mode: themeColor,
       primary: {
         main: primaryColor,
+        light: bgColor,
+        dark: bgColor,
+        contrastText: fontColorPrimary,
       },
       // background: {
       //   default: backgroundColor,

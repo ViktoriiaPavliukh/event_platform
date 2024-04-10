@@ -1,6 +1,7 @@
 "use client";
 // @ts-nocheck
-import * as React from "react";
+import React, { useState } from "react";
+import { useTheme } from "@mui/material/styles";
 import {
   AppBar,
   Box,
@@ -11,10 +12,9 @@ import {
   List,
   ListItem,
   ListItemButton,
-  ListItemText,
   Toolbar,
-  Typography,
   Button,
+  Switch,
 } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
 import Image from "next/image";
@@ -25,6 +25,7 @@ import Link from "next/link";
 import { useUser } from "@clerk/nextjs";
 import { navItems } from "@/constants";
 import { usePathname } from "next/navigation";
+import { lightTheme, darkTheme } from "../../app/theme";
 
 // @ts-ignore
 import type { Props } from "@/types";
@@ -34,12 +35,19 @@ const drawerWidth = 240;
 
 const Header: React.FC<Props> = (props) => {
   const { window } = props;
-  const [mobileOpen, setMobileOpen] = React.useState(false);
+  const [mobileOpen, setMobileOpen] = useState(false);
+  const [checked, setChecked] = useState(true);
+  const [isDarkModeEnabled, setIsDarkModeEnabled] = useState(false);
   const pathname = usePathname();
+  const handleChange = () => {
+    setChecked((prevChecked) => !prevChecked);
+  };
 
   const handleDrawerToggle = () => {
     setMobileOpen((prevState) => !prevState);
   };
+
+  const theme = useTheme();
 
   const drawer = (
     <Box onClick={handleDrawerToggle} sx={{ textAlign: "center" }}>
@@ -59,7 +67,7 @@ const Header: React.FC<Props> = (props) => {
             <ListItem key={item.route} disablePadding>
               <ListItemButton sx={{ paddingLeft: "40px", py: "16px" }}>
                 <Link
-                  color={isActive ? "primary" : "inherit"}
+                  color={isActive ? theme.palette.primary.main : "inherit"}
                   href={item.route}
                 >
                   {item.label}
@@ -98,7 +106,6 @@ const Header: React.FC<Props> = (props) => {
           }}
         >
           <IconButton
-            color="inherit"
             aria-label="open drawer"
             edge="start"
             onClick={handleDrawerToggle}
@@ -127,7 +134,7 @@ const Header: React.FC<Props> = (props) => {
                     }}
                   >
                     <Link
-                      color={isActive ? "primary" : "inherit"}
+                      color={isActive ? "primaryColor" : "inherit"}
                       href={item.route}
                     >
                       {item.label}
@@ -137,6 +144,13 @@ const Header: React.FC<Props> = (props) => {
               );
             })}
           </List>
+          <Switch />
+          {/* <Switch
+            checked={checked}
+            onChange={handleChange}
+            inputProps={{ "aria-label": "Toggle theme" }}
+            theme={isDarkModeEnabled ? darkTheme : lightTheme}
+          /> */}
 
           {user ? (
             <Box
@@ -151,12 +165,18 @@ const Header: React.FC<Props> = (props) => {
                 <UserButton afterSignOutUrl="/" />
               </SignedIn>
               <SignOutButton>
-                <Link href="/sign-in">Logout</Link>
+                <Link href="/">
+                  <Button sx={{ color: theme.palette.primary.contrastText }}>
+                    Logout
+                  </Button>
+                </Link>
               </SignOutButton>
             </Box>
           ) : (
             <Link href="/sign-in">
-              <Button sx={{ color: "#000" }}>Login</Button>
+              <Button sx={{ color: theme.palette.primary.contrastText }}>
+                Login
+              </Button>
             </Link>
           )}
         </Toolbar>

@@ -22,7 +22,9 @@ const Card = ({ event, hasOrderLink, hidePrice }: CardProps) => {
       ? user.publicMetadata.userId
       : "";
 
-  const isEventCreator = userId === event.organiser._id.toString();
+  const isEventCreator =
+    event.organiser && userId === event.organiser._id.toString();
+
   return (
     <Box
       sx={{
