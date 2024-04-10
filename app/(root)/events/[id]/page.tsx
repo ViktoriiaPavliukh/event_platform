@@ -158,6 +158,7 @@ const EventDetails = async ({
           alignItems: "center",
           flexDirection: "column",
           py: "40px",
+          gap: "20px",
         }}
       >
         <Typography variant="h4">Related Events</Typography>

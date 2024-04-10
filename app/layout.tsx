@@ -1,6 +1,7 @@
-import { ClerkProvider } from "@clerk/nextjs";
 import type { Metadata } from "next";
 import { Mulish } from "next/font/google";
+import { GoogleOAuthProvider } from "@react-oauth/google";
+import { ClerkProvider } from "@clerk/nextjs";
 import { ThemeProvider } from "@mui/material/styles";
 import { lightTheme, darkTheme } from "./theme";
 import "./globals.css";
@@ -27,15 +28,18 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   const isDarkModeEnabled = false;
+  const clientId = process.env.CLIENT_ID || "";
   return (
     <ThemeProvider theme={isDarkModeEnabled ? darkTheme : lightTheme}>
-      <ClerkProvider>
-        <html lang="en">
-          <body suppressHydrationWarning={true} className={inter.variable}>
-            {children}
-          </body>
-        </html>
-      </ClerkProvider>
+      <GoogleOAuthProvider clientId={clientId}>
+        <ClerkProvider>
+          <html lang="en">
+            <body suppressHydrationWarning={true} className={inter.variable}>
+              {children}
+            </body>
+          </html>
+        </ClerkProvider>
+      </GoogleOAuthProvider>
     </ThemeProvider>
   );
 }

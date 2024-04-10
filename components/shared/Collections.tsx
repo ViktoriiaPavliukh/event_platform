@@ -1,7 +1,8 @@
 "use client";
-import React from "react";
+import React, { useState } from "react";
+import { useGoogleLogin } from "@react-oauth/google";
 import { IEvent } from "@/lib/database/models/event.model";
-import { Box, Typography, List, ListItem } from "@mui/material";
+import { Box, Typography, List, ListItem, Button } from "@mui/material";
 import Card from "./Card";
 import Pagination from "./Pagination";
 
@@ -25,6 +26,15 @@ const Collections = ({
   collectionType,
   urlParamName,
 }: CollectionProps) => {
+  const [accessToken, setAccessToken] = useState<string | null>(null);
+  const login = useGoogleLogin({
+    onSuccess: (response) => {
+      console.log(response);
+      setAccessToken(response.access_token);
+    },
+    onError: (error) => console.error(error),
+  });
+  console.log(accessToken);
   return (
     <>
       {data && data.length > 0 ? (
@@ -48,13 +58,23 @@ const Collections = ({
                 <ListItem
                   component="li"
                   key={event?._id}
-                  sx={{ display: "flex", width: "fit-content" }}
+                  sx={{
+                    display: "flex",
+                    width: "fit-content",
+                    flexDirection: "column",
+                    gap: "20px",
+                  }}
                 >
                   <Card
                     event={event}
                     hasOrderLink={hasOrderLink}
                     hidePrice={hidePrice}
                   />
+                  {collectionType === "My_tickets" && (
+                    <Button variant="contained" onClick={() => login()}>
+                      Add to Google Calendar
+                    </Button>
+                  )}
                 </ListItem>
               );
             })}
