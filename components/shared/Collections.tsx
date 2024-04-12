@@ -1,7 +1,8 @@
 "use client";
-import React from "react";
+import React, { useState } from "react";
+import { useGoogleLogin } from "@react-oauth/google";
 import { IEvent } from "@/lib/database/models/event.model";
-import { Box, Typography, List, ListItem } from "@mui/material";
+import { Box, Typography, List, ListItem, Button } from "@mui/material";
 import Card from "./Card";
 import Pagination from "./Pagination";
 
@@ -25,6 +26,49 @@ const Collections = ({
   collectionType,
   urlParamName,
 }: CollectionProps) => {
+  const [accessToken, setAccessToken] = useState<string | null>(null);
+
+  const login = useGoogleLogin({
+    onSuccess: (response) => {
+      setAccessToken(response.access_token);
+    },
+    onError: (error) => console.error(error),
+  });
+
+  console.log(accessToken);
+  const addEventToGoogleCalendar = async (event: IEvent) => {
+    try {
+      login();
+      console.log(event);
+      const response = await fetch("/api/calendar/handler", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${accessToken}`, // Include access token in header
+        },
+        body: JSON.stringify({
+          event: {
+            // Assuming event data is structured correctly
+            summary: event.title,
+            description: event.description,
+            start: new Date(event.startDateTime).toISOString(),
+            end: new Date(event.endDateTime).toISOString(),
+          },
+        }),
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to add event to Google Calendar");
+      }
+
+      const data = await response.json();
+      console.log("Event added:", data);
+      // Handle success (e.g., show a confirmation message to the user)
+    } catch (error) {
+      console.error("Error adding event to Google Calendar:", error);
+      // Handle error (e.g., display an error message to the user)
+    }
+  };
   return (
     <>
       {data && data.length > 0 ? (
@@ -48,13 +92,26 @@ const Collections = ({
                 <ListItem
                   component="li"
                   key={event?._id}
-                  sx={{ display: "flex", width: "fit-content" }}
+                  sx={{
+                    display: "flex",
+                    width: "fit-content",
+                    flexDirection: "column",
+                    gap: "20px",
+                  }}
                 >
                   <Card
                     event={event}
                     hasOrderLink={hasOrderLink}
                     hidePrice={hidePrice}
                   />
+                  {collectionType === "My_tickets" && (
+                    <Button
+                      variant="contained"
+                      onClick={() => addEventToGoogleCalendar(event)}
+                    >
+                      Add to Google Calendar
+                    </Button>
+                  )}
                 </ListItem>
               );
             })}

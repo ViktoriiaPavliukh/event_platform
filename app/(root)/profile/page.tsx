@@ -111,7 +111,6 @@ const Profile = ({ searchParams }: SearchParamProps) => {
             Create New Event
           </Button>
         </Box>
-
         <Collections
           data={organizedEvents?.data}
           emptyTitle="No events have been created yet"
