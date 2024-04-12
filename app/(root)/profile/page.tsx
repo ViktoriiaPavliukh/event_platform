@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, Suspense } from "react";
 import { Button, Typography, Box } from "@mui/material";
 import Collections from "@/components/shared/Collections";
 import { getEventsByUser } from "@/lib/actions/event.actions";
@@ -9,6 +9,7 @@ import { IEvent } from "@/lib/database/models/event.model";
 import { useUser } from "@clerk/nextjs";
 import Link from "next/link";
 import { SearchParamProps } from "@/types";
+import Loading from "../../../components/shared/Loading";
 
 const Profile = ({ searchParams }: SearchParamProps) => {
   const { user } = useUser();
@@ -84,16 +85,18 @@ const Profile = ({ searchParams }: SearchParamProps) => {
             Explore More Events
           </Button>
         </Box>
-        <Collections
-          data={orderedEvents}
-          emptyTitle="No event tickets purchased yet"
-          emptyStateSubtext="No worries - plenty of exciting events to explore!"
-          collectionType="My_tickets"
-          limit={3}
-          page={ordersPage}
-          urlParamName="ordersPage"
-          totalPages={orderedEventsTotalPages}
-        />
+        <Suspense fallback={<Loading />}>
+          <Collections
+            data={orderedEvents}
+            emptyTitle="No event tickets purchased yet"
+            emptyStateSubtext="No worries - plenty of exciting events to explore!"
+            collectionType="My_tickets"
+            limit={3}
+            page={ordersPage}
+            urlParamName="ordersPage"
+            totalPages={orderedEventsTotalPages}
+          />
+        </Suspense>
         <Box
           sx={{
             display: "flex",
