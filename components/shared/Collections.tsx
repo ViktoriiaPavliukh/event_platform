@@ -1,10 +1,11 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useGoogleLogin } from "@react-oauth/google";
 import { IEvent } from "@/lib/database/models/event.model";
 import { Box, Typography, List, ListItem, Button } from "@mui/material";
 import Card from "./Card";
 import Pagination from "./Pagination";
+import Loading from "./Loading";
 
 type CollectionProps = {
   data: IEvent[];
@@ -27,6 +28,13 @@ const Collections = ({
   urlParamName,
 }: CollectionProps) => {
   const [accessToken, setAccessToken] = useState<string | null>(null);
+  const [loading, setLoading] = useState<boolean>(true);
+
+  useEffect(() => {
+    if (data && data.length > 0) {
+      setLoading(false);
+    }
+  }, [data]);
 
   const login = useGoogleLogin({
     onSuccess: (response) => {
@@ -71,75 +79,81 @@ const Collections = ({
   };
   return (
     <>
-      {data && data.length > 0 ? (
-        <Box>
-          {" "}
-          <List
-            component="ul"
-            sx={{
-              display: "flex",
-              width: "100%",
-              flexWrap: "wrap",
-              justifyContent: "center",
-              alignItems: "center",
-            }}
-          >
-            {data.map((event) => {
-              const hasOrderLink = collectionType === "Events_Organised";
-              const hidePrice = collectionType === "My_tickets";
-
-              return (
-                <ListItem
-                  component="li"
-                  key={event?._id}
-                  sx={{
-                    display: "flex",
-                    width: "fit-content",
-                    flexDirection: "column",
-                    gap: "20px",
-                  }}
-                >
-                  <Card
-                    event={event}
-                    hasOrderLink={hasOrderLink}
-                    hidePrice={hidePrice}
-                  />
-                  {collectionType === "My_tickets" && (
-                    <Button
-                      variant="contained"
-                      onClick={() => addEventToGoogleCalendar(event)}
-                    >
-                      Add to Google Calendar
-                    </Button>
-                  )}
-                </ListItem>
-              );
-            })}
-          </List>
-          {totalPages > 1 && (
-            <Pagination
-              urlParamName={urlParamName}
-              page={page}
-              totalPages={totalPages}
-            />
-          )}
-        </Box>
+      {loading ? (
+        <Loading /> // Show loading indicator if data is being fetched
       ) : (
-        <Box
-          sx={{
-            display: "flex",
-            flexDirection: "column",
-            justifyContent: "center",
-            alignItems: "center",
-            gap: "20px",
-            padding: "50px",
-            borderRadius: "8px",
-            backgroundColor: "#f8f4f0",
-          }}
-        >
-          <Typography variant="h5">{emptyTitle}</Typography>
-          <Typography variant="body1">{emptyStateSubtext}</Typography>
-        </Box>
+        <>
+          {data && data.length > 0 ? (
+            <Box>
+              {" "}
+              <List
+                component="ul"
+                sx={{
+                  display: "flex",
+                  width: "100%",
+                  flexWrap: "wrap",
+                  justifyContent: "center",
+                  alignItems: "center",
+                }}
+              >
+                {data.map((event) => {
+                  const hasOrderLink = collectionType === "Events_Organised";
+                  const hidePrice = collectionType === "My_tickets";
+
+                  return (
+                    <ListItem
+                      component="li"
+                      key={event?._id}
+                      sx={{
+                        display: "flex",
+                        width: "fit-content",
+                        flexDirection: "column",
+                        gap: "20px",
+                      }}
+                    >
+                      <Card
+                        event={event}
+                        hasOrderLink={hasOrderLink}
+                        hidePrice={hidePrice}
+                      />
+                      {collectionType === "My_tickets" && (
+                        <Button
+                          variant="contained"
+                          onClick={() => addEventToGoogleCalendar(event)}
+                        >
+                          Add to Google Calendar
+                        </Button>
+                      )}
+                    </ListItem>
+                  );
+                })}
+              </List>
+              {totalPages > 1 && (
+                <Pagination
+                  urlParamName={urlParamName}
+                  page={page}
+                  totalPages={totalPages}
+                />
+              )}
+            </Box>
+          ) : (
+            <Box
+              sx={{
+                display: "flex",
+                flexDirection: "column",
+                justifyContent: "center",
+                alignItems: "center",
+                gap: "20px",
+                padding: "50px",
+                borderRadius: "8px",
+                backgroundColor: "#f8f4f0",
+              }}
+            >
+              <Typography variant="h5">{emptyTitle}</Typography>
+              <Typography variant="body1">{emptyStateSubtext}</Typography>
+            </Box>
+          )}
+        </>
       )}
     </>
   );
