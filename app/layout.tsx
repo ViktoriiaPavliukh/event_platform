@@ -3,8 +3,14 @@ import { Mulish } from "next/font/google";
 import { GoogleOAuthProvider } from "@react-oauth/google";
 import { ClerkProvider } from "@clerk/nextjs";
 import { ThemeProvider } from "@mui/material/styles";
+import { createClient } from "@supabase/supabase-js";
 import { lightTheme, darkTheme } from "./theme";
 import "./globals.css";
+
+const supabase = createClient(
+  "https://hpttgtvgrblzsijmnedt.supabase.co",
+  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImhwdHRndHZncmJsenNpam1uZWR0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3MTI4Mzk2MjMsImV4cCI6MjAyODQxNTYyM30.qMXBYtzHPYZvlUyZTOb141auCDelKynSSYzMykQZcy0"
+);
 
 const inter = Mulish({
   subsets: ["latin"],

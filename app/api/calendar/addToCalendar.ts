@@ -47,3 +47,5 @@ const addToCalendar = async (event: IEvent) => {
     // Handle errors (e.g., display an error message to the user)
   }
 };
+
+export default addToCalendar;
