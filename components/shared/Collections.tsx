@@ -43,40 +43,39 @@ const Collections = ({
     onError: (error) => console.error(error),
   });
 
-  console.log(accessToken);
-  const addEventToGoogleCalendar = async (event: IEvent) => {
-    try {
-      login();
-      console.log(event);
-      const response = await fetch("/api/calendar/handler", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${accessToken}`, // Include access token in header
-        },
-        body: JSON.stringify({
-          event: {
-            // Assuming event data is structured correctly
-            summary: event.title,
-            description: event.description,
-            start: new Date(event.startDateTime).toISOString(),
-            end: new Date(event.endDateTime).toISOString(),
-          },
-        }),
-      });
+  // console.log(accessToken);
+  // const addEventToGoogleCalendar = async (event: IEvent) => {
+  //   try {
+  //     login();
+  //     console.log(event);
+  //     const response = await fetch("/api/calendar/handler", {
+  //       method: "POST",
+  //       headers: {
+  //         "Content-Type": "application/json",
+  //         Authorization: `Bearer ${accessToken}`, // Include access token in header
+  //       },
+  //       body: JSON.stringify({
+  //         event: {
+  //           summary: event.title,
+  //           description: event.description,
+  //           start: new Date(event.startDateTime).toISOString(),
+  //           end: new Date(event.endDateTime).toISOString(),
+  //         },
+  //       }),
+  //     });
 
-      if (!response.ok) {
-        throw new Error("Failed to add event to Google Calendar");
-      }
+  //     if (!response.ok) {
+  //       throw new Error("Failed to add event to Google Calendar");
+  //     }
 
-      const data = await response.json();
-      console.log("Event added:", data);
-      // Handle success (e.g., show a confirmation message to the user)
-    } catch (error) {
-      console.error("Error adding event to Google Calendar:", error);
-      // Handle error (e.g., display an error message to the user)
-    }
-  };
+  //     const data = await response.json();
+  //     console.log("Event added:", data);
+  //     // Handle success (e.g., show a confirmation message to the user)
+  //   } catch (error) {
+  //     console.error("Error adding event to Google Calendar:", error);
+  //     // Handle error (e.g., display an error message to the user)
+  //   }
+  // };
   return (
     <>
       {loading ? (
@@ -119,7 +118,7 @@ const Collections = ({
                       {collectionType === "My_tickets" && (
                         <Button
                           variant="contained"
-                          onClick={() => addEventToGoogleCalendar(event)}
+                          onClick={() => login()}
                         >
                           Add to Google Calendar
                         </Button>
