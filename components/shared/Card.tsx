@@ -16,11 +16,14 @@ type CardProps = {
 };
 
 const Card = ({ event, hasOrderLink, hidePrice }: CardProps) => {
+  console.log(event);
   const { user } = useUser();
   const userId: string =
     typeof user?.publicMetadata.userId === "string"
       ? user.publicMetadata.userId
       : "";
+
+  console.log(user);
 
   const isEventCreator =
     event &&
@@ -33,16 +36,16 @@ const Card = ({ event, hasOrderLink, hidePrice }: CardProps) => {
       sx={{
         display: "flex",
         gap: "10px",
-        width: { xs: "300px", sm: "350px" },
-        height: "400px",
+        width: "fit-content",
+        maxWidth: { xs: "300px", sm: "350px" },
+        maxheight: "400px",
         padding: "20px",
         backgroundColor: "#f8f4f0",
         borderRadius: "12px",
       }}
     >
       {event && (
-        <Box >
-          {!hidePrice && (
+        <Box>
             <Box>
               <Link href={`/events/${event._id}`}>
                 <Image
@@ -62,14 +65,14 @@ const Card = ({ event, hasOrderLink, hidePrice }: CardProps) => {
                   alignItems: "center",
                 }}
               >
-                {" "}
+                  {!hidePrice && (
                 <Typography>
                   {event.isFree ? "Free" : `${event.price}`}
                 </Typography>
+                  )}
                 <Typography>{event.category.name}</Typography>
               </Stack>
             </Box>
-          )}
           <Typography>
             {formatDateTime(event.startDateTime).dateTime}
           </Typography>
@@ -84,9 +87,9 @@ const Card = ({ event, hasOrderLink, hidePrice }: CardProps) => {
               alignItems: "left",
             }}
           >
-            <Typography>
+            {/* <Typography>
               {event.organiser.firstName} {event.organiser.lastName}
-            </Typography>
+            </Typography> */}
             {hasOrderLink && (
               <Link href={`/orders?eventId=${event._id}`}>
                 <Box sx={{ display: "flex" }}>
@@ -98,15 +101,14 @@ const Card = ({ event, hasOrderLink, hidePrice }: CardProps) => {
           </Stack>
         </Box>
       )}
-      {isEventCreator &&
-        !hidePrice && ( // Only render edit/delete if event creator
-          <Box sx={{ display: "flex", flexDirection: "column" }}>
-            <Link href={`/events/${event._id}/update`}>
-              <EditNoteIcon sx={{ paddingLeft: "3px" }} />
-            </Link>
-            <DeleteModal eventId={event._id} />
-          </Box>
-        )}
+      {isEventCreator && !hidePrice && (
+        <Box sx={{ display: "flex", flexDirection: "column" }}>
+          <Link href={`/events/${event._id}/update`}>
+            <EditNoteIcon sx={{ paddingLeft: "3px" }} />
+          </Link>
+          <DeleteModal eventId={event._id} />
+        </Box>
+      )}
     </Box>
   );
 };
