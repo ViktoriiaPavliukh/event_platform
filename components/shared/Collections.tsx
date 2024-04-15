@@ -77,22 +77,36 @@ const Collections = ({
   //   }
   // };
   return (
-    <>
+    <Box
+      sx={{
+        width: "90%",
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+      }}
+    >
       {loading ? (
         <Loading /> // Show loading indicator if data is being fetched
       ) : (
         <>
           {data && data.length > 0 ? (
-            <Box>
+            <Box
+              sx={{
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+                flexDirection: "column",
+              }}
+            >
               {" "}
               <List
                 component="ul"
                 sx={{
                   display: "flex",
-                  width: "100%",
                   flexWrap: "wrap",
                   justifyContent: "center",
                   alignItems: "center",
+                  gap: "20px 30px",
                 }}
               >
                 {data.map((event) => {
@@ -105,9 +119,10 @@ const Collections = ({
                       key={event?._id}
                       sx={{
                         display: "flex",
-                        width: "fit-content",
+                        width: "300px",
+                        // flexGrow: 1,
+                        // height: "400px",
                         flexDirection: "column",
-                        gap: "20px",
                       }}
                     >
                       <Card
@@ -116,10 +131,7 @@ const Collections = ({
                         hidePrice={hidePrice}
                       />
                       {collectionType === "My_tickets" && (
-                        <Button
-                          variant="contained"
-                          onClick={() => login()}
-                        >
+                        <Button variant="contained" onClick={() => login()}>
                           Add to Google Calendar
                         </Button>
                       )}
@@ -154,7 +166,7 @@ const Collections = ({
           )}
         </>
       )}
-    </>
+    </Box>
   );
 };
 
