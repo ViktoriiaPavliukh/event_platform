@@ -30,9 +30,9 @@ export default async function Home({ searchParams }: SearchParamProps) {
           flexDirection: {
             xs: "column",
             md: "row",
-            justifyContent: "center",
-            alignItems: "center",
           },
+          justifyContent: "center",
+          alignItems: "center",
           gap: "60px",
         }}
       >
@@ -85,15 +85,19 @@ export default async function Home({ searchParams }: SearchParamProps) {
         <Search />
         <CategoryFilter />
       </Box>
-      <Collections
-        data={events?.data}
-        emptyTitle="No events found"
-        emptyStateSubtext="Come back later"
-        collectionType="All_events"
-        limit={6}
-        page={page}
-        totalPages={events?.totalPages}
-      />
+      <Box
+        sx={{ display: "flex", justifyContent: "center", alignItems: "center" }}
+      >
+        <Collections
+          data={events?.data}
+          emptyTitle="No events found"
+          emptyStateSubtext="Come back later"
+          collectionType="All_events"
+          limit={6}
+          page={page}
+          totalPages={events?.totalPages}
+        />
+      </Box>
     </>
     // <main className={styles.main}>
     //   {/* <ButtonContained /> */}

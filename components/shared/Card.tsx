@@ -1,5 +1,12 @@
 import React from "react";
-import { Box, Typography, Stack } from "@mui/material";
+import {
+  Box,
+  Typography,
+  Stack,
+  Card,
+  CardActionArea,
+  CardContent,
+} from "@mui/material";
 import EditNoteIcon from "@mui/icons-material/EditNote";
 import ArrowOutwardIcon from "@mui/icons-material/ArrowOutward";
 import Link from "next/link";
@@ -15,15 +22,12 @@ type CardProps = {
   hidePrice?: boolean;
 };
 
-const Card = ({ event, hasOrderLink, hidePrice }: CardProps) => {
-  console.log(event);
+const EventCard = ({ event, hasOrderLink, hidePrice }: CardProps) => {
   const { user } = useUser();
   const userId: string =
     typeof user?.publicMetadata.userId === "string"
       ? user.publicMetadata.userId
       : "";
-
-  console.log(user);
 
   const isEventCreator =
     event &&
@@ -32,85 +36,95 @@ const Card = ({ event, hasOrderLink, hidePrice }: CardProps) => {
     userId === event.organiser._id.toString();
 
   return (
-    <Box
+    <Card
       sx={{
         display: "flex",
+        flexDirection: "column",
         gap: "10px",
-        width: "fit-content",
-        maxWidth: { xs: "300px", sm: "350px" },
-        maxheight: "400px",
-        padding: "20px",
+        width: { xs: "300px", sm: "300px", md: "300px" },
+        height: "400px",
         backgroundColor: "#f8f4f0",
         borderRadius: "12px",
       }}
     >
-      {event && (
-        <Box>
-            <Box>
-              <Link href={`/events/${event._id}`}>
-                <Image
-                  src={event.imageUrl}
-                  alt="hero image"
-                  width={300}
-                  height={300}
-                  layout="responsive"
-                  priority={true}
-                />
-              </Link>
-              <Stack
-                sx={{
-                  display: "flex",
-                  flexDirection: "row",
-                  justifyContent: "space-between",
-                  alignItems: "center",
-                }}
-              >
+      <CardActionArea sx={{ height: "100%" }}>
+        {event && (
+          <Box sx={{ padding: "20px" }}>
+            <Link href={`/events/${event._id}`}>
+              <Image
+                src={event.imageUrl}
+                alt="hero image"
+                width={300}
+                height={300}
+                layout="responsive"
+                priority={true}
+              />
+              <CardContent>
+                <Stack
+                  sx={{
+                    display: "flex",
+                    flexDirection: "row",
+                    justifyContent: "space-between",
+                    alignItems: "center",
+                  }}
+                >
                   {!hidePrice && (
-                <Typography>
-                  {event.isFree ? "Free" : `${event.price}`}
-                </Typography>
+                    <Typography>
+                      {event.isFree ? "Free" : `${event.price} GBP`}
+                    </Typography>
                   )}
-                <Typography>{event.category.name}</Typography>
-              </Stack>
-            </Box>
-          <Typography>
-            {formatDateTime(event.startDateTime).dateTime}
-          </Typography>
-          <Link href={`/events/${event._id}`}>
-            <Typography>{event.title}</Typography>
-          </Link>
-          <Stack
-            sx={{
-              display: "flex",
-              flexDirection: "column",
-              justifyContent: "left",
-              alignItems: "left",
-            }}
-          >
-            {/* <Typography>
+                  <Typography>{event.category.name}</Typography>
+                </Stack>
+
+                <Typography>
+                  {formatDateTime(event.startDateTime).dateTime}
+                </Typography>
+                <Link href={`/events/${event._id}`}>
+                  <Typography>{event.title}</Typography>
+                </Link>
+                <Stack
+                  sx={{
+                    display: "flex",
+                    flexDirection: "column",
+                    justifyContent: "left",
+                    alignItems: "left",
+                  }}
+                >
+                  {/* <Typography>
               {event.organiser.firstName} {event.organiser.lastName}
             </Typography> */}
-            {hasOrderLink && (
-              <Link href={`/orders?eventId=${event._id}`}>
-                <Box sx={{ display: "flex" }}>
-                  <Typography>Order Details</Typography>
-                  <ArrowOutwardIcon />
-                </Box>
-              </Link>
-            )}
-          </Stack>
-        </Box>
-      )}
-      {isEventCreator && !hidePrice && (
-        <Box sx={{ display: "flex", flexDirection: "column" }}>
-          <Link href={`/events/${event._id}/update`}>
-            <EditNoteIcon sx={{ paddingLeft: "3px" }} />
-          </Link>
-          <DeleteModal eventId={event._id} />
-        </Box>
-      )}
-    </Box>
+                  {hasOrderLink && (
+                    <Link href={`/orders?eventId=${event._id}`}>
+                      <Box sx={{ display: "flex" }}>
+                        <Typography>Order Details</Typography>
+                        <ArrowOutwardIcon />
+                      </Box>
+                    </Link>
+                  )}
+                </Stack>
+              </CardContent>
+            </Link>
+          </Box>
+        )}
+        {isEventCreator && !hidePrice && (
+          <Box
+            sx={{
+              display: "flex",
+              flexDirection: "row",
+              p: "20px",
+              gap: "5px",
+              justifyContent: "end",
+            }}
+          >
+            <Link href={`/events/${event._id}/update`}>
+              <EditNoteIcon sx={{ paddingLeft: "3px" }} />
+            </Link>
+            <DeleteModal eventId={event._id} />
+          </Box>
+        )}
+      </CardActionArea>
+    </Card>
   );
 };
 
-export default Card;
+export default EventCard;
