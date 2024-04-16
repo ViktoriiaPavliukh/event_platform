@@ -6,6 +6,7 @@ import {
   Card,
   CardActionArea,
   CardContent,
+  CardMedia,
 } from "@mui/material";
 import EditNoteIcon from "@mui/icons-material/EditNote";
 import ArrowOutwardIcon from "@mui/icons-material/ArrowOutward";
@@ -23,6 +24,7 @@ type CardProps = {
 };
 
 const EventCard = ({ event, hasOrderLink, hidePrice }: CardProps) => {
+  // console.log(event);
   const { user } = useUser();
   const userId: string =
     typeof user?.publicMetadata.userId === "string"
@@ -48,9 +50,9 @@ const EventCard = ({ event, hasOrderLink, hidePrice }: CardProps) => {
       }}
     >
       <CardActionArea sx={{ height: "100%" }}>
-        {event && (
-          <Box sx={{ padding: "20px" }}>
-            <Link href={`/events/${event._id}`}>
+        <Link href={`/events/${event._id}`}>
+          {event && (
+            <Box sx={{ padding: "20px" }}>
               <Image
                 src={event.imageUrl}
                 alt="hero image"
@@ -79,9 +81,7 @@ const EventCard = ({ event, hasOrderLink, hidePrice }: CardProps) => {
                 <Typography>
                   {formatDateTime(event.startDateTime).dateTime}
                 </Typography>
-                <Link href={`/events/${event._id}`}>
-                  <Typography>{event.title}</Typography>
-                </Link>
+                <Typography>{event.title}</Typography>
                 <Stack
                   sx={{
                     display: "flex",
@@ -103,9 +103,9 @@ const EventCard = ({ event, hasOrderLink, hidePrice }: CardProps) => {
                   )}
                 </Stack>
               </CardContent>
-            </Link>
-          </Box>
-        )}
+            </Box>
+          )}
+        </Link>
         {isEventCreator && !hidePrice && (
           <Box
             sx={{
