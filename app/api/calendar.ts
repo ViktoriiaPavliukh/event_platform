@@ -1,6 +1,6 @@
 import { NextApiRequest, NextApiResponse } from "next";
-import { authorize } from "./quickstart/index";
-import createCalendarEvent from "./quickstart/index";
+import { authorize } from "./calendar/quickstart";
+import createCalendarEvent from "./calendar/quickstart";
 
 export default async function handler(
   req: NextApiRequest,

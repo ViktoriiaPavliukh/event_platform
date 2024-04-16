@@ -83,7 +83,6 @@ const Header: React.FC<Props> = (props) => {
   const container =
     window !== undefined ? () => window().document.body : undefined;
   const { user } = useUser();
-
   return (
     <Box
       sx={{
