@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   Box,
   Typography,
@@ -6,8 +6,8 @@ import {
   Card,
   CardActionArea,
   CardContent,
-  CardMedia,
 } from "@mui/material";
+import { useTheme } from "@mui/material/styles";
 import EditNoteIcon from "@mui/icons-material/EditNote";
 import ArrowOutwardIcon from "@mui/icons-material/ArrowOutward";
 import Link from "next/link";
@@ -24,7 +24,7 @@ type CardProps = {
 };
 
 const EventCard = ({ event, hasOrderLink, hidePrice }: CardProps) => {
-  // console.log(event);
+  const theme = useTheme();
   const { user } = useUser();
   const userId: string =
     typeof user?.publicMetadata.userId === "string"
@@ -36,6 +36,7 @@ const EventCard = ({ event, hasOrderLink, hidePrice }: CardProps) => {
     event.organiser &&
     event.organiser._id &&
     userId === event.organiser._id.toString();
+  const [isHovered, setIsHovered] = useState(false);
 
   return (
     <Card
@@ -48,20 +49,41 @@ const EventCard = ({ event, hasOrderLink, hidePrice }: CardProps) => {
         backgroundColor: "#f8f4f0",
         borderRadius: "12px",
       }}
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
     >
-      <CardActionArea sx={{ height: "100%" }}>
+      <CardActionArea sx={{ height: "100%", paddingBottom: "20px" }}>
         <Link href={`/events/${event._id}`}>
           {event && (
-            <Box sx={{ padding: "20px" }}>
-              <Image
-                src={event.imageUrl}
-                alt="hero image"
-                width={300}
-                height={300}
-                layout="responsive"
-                priority={true}
-              />
-              <CardContent>
+            <Box
+              sx={{
+                padding: "20px",
+                position: "relative",
+                zIndex: "0",
+              }}
+            >
+              <Box
+                sx={{
+                  display: "flex",
+                  width: "100%",
+
+                  justifyContent: "center",
+                  alignItems: "center",
+                }}
+              >
+                <Image
+                  src={event.imageUrl}
+                  alt="hero image"
+                  width={150}
+                  height={150}
+                  style={{ borderRadius: "12px" }}
+                  // layout="responsive"
+                  priority={true}
+                />
+              </Box>
+              <CardContent
+                sx={{ display: "flex", flexDirection: "column", gap: "10px" }}
+              >
                 <Stack
                   sx={{
                     display: "flex",
@@ -71,37 +93,63 @@ const EventCard = ({ event, hasOrderLink, hidePrice }: CardProps) => {
                   }}
                 >
                   {!hidePrice && (
-                    <Typography>
+                    <Typography
+                      sx={{
+                        backgroundColor: theme.palette.primary.main,
+                        padding: "5px 10px",
+                        borderRadius: "6px",
+                      }}
+                    >
                       {event.isFree ? "Free" : `${event.price} GBP`}
                     </Typography>
                   )}
-                  <Typography>{event.category.name}</Typography>
+                  {event.category.name ? (
+                    <Typography
+                      sx={{
+                        backgroundColor: theme.palette.primary.main,
+                        padding: "5px 10px",
+                        borderRadius: "6px",
+                      }}
+                    >
+                      {event.category.name}
+                    </Typography>
+                  ) : null}
                 </Stack>
-
                 <Typography>
                   {formatDateTime(event.startDateTime).dateTime}
                 </Typography>
                 <Typography>{event.title}</Typography>
-                <Stack
-                  sx={{
-                    display: "flex",
-                    flexDirection: "column",
-                    justifyContent: "left",
-                    alignItems: "left",
-                  }}
-                >
-                  {/* <Typography>
-              {event.organiser.firstName} {event.organiser.lastName}
-            </Typography> */}
-                  {hasOrderLink && (
+                {hasOrderLink && (
+                  <Stack
+                    sx={{
+                      display: "flex",
+                      flexDirection: "column",
+                      justifySelf: "baseline",
+                      alignSelf: "left",
+                      justifyContent: "baseline",
+                      alignItems: "baseline",
+                    }}
+                  >
                     <Link href={`/orders?eventId=${event._id}`}>
-                      <Box sx={{ display: "flex" }}>
-                        <Typography>Order Details</Typography>
+                      <Box
+                        sx={{
+                          display: "flex",
+                          justifyContent: "center",
+                          alignItems: "center",
+                          width: "fit-content",
+                          backgroundColor: theme.palette.primary.main,
+                          padding: "5px 10px",
+                          borderRadius: "6px",
+                        }}
+                      >
+                        <Typography sx={{ textWrap: "nowrap" }}>
+                          Order Details
+                        </Typography>
                         <ArrowOutwardIcon />
                       </Box>
                     </Link>
-                  )}
-                </Stack>
+                  </Stack>
+                )}
               </CardContent>
             </Box>
           )}
@@ -109,11 +157,18 @@ const EventCard = ({ event, hasOrderLink, hidePrice }: CardProps) => {
         {isEventCreator && !hidePrice && (
           <Box
             sx={{
+              position: "absolute",
+              bottom: "20px",
+              right: "10px",
+              zIndex: "10",
               display: "flex",
-              flexDirection: "row",
-              p: "20px",
+              flexDirection: "column",
+              p: "5px",
               gap: "5px",
               justifyContent: "end",
+              alignItems: "end",
+              // visibility: isHovered ? "visible" : "hidden",
+              background: theme.palette.primary.main,
             }}
           >
             <Link href={`/events/${event._id}/update`}>

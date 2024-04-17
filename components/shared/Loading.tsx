@@ -9,6 +9,7 @@ const Loading = () => {
         justifyContent: "center",
         alignItems: "center",
         height: "100vh",
+        gap: "20px",
       }}
     >
       <CircularProgress />

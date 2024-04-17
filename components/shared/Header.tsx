@@ -130,7 +130,17 @@ const Header: React.FC<Props> = (props) => {
                       display: "flex",
                       minWidth: "150px",
                       justifyContent: "center",
+                      alignItems: "center",
+                      textTransform: "uppercase",
+                      textAlign: "center",
+                      fontSize: "16px",
+                      textWrap: "nowrap",
+                      color: isActive ? "#fff" : "inherit",
+                      "&:hover": {
+                        color: "#fff",
+                      },
                     }}
+                    className={isActive ? "active" : ""}
                   >
                     <Link
                       color={isActive ? "primaryColor" : "inherit"}
@@ -144,13 +154,6 @@ const Header: React.FC<Props> = (props) => {
             })}
           </List>
           <Switch />
-          {/* <Switch
-            checked={checked}
-            onChange={handleChange}
-            inputProps={{ "aria-label": "Toggle theme" }}
-            theme={isDarkModeEnabled ? darkTheme : lightTheme}
-          /> */}
-
           {user ? (
             <Box
               sx={{
