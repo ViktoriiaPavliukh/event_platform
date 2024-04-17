@@ -20,7 +20,6 @@ import LinkIcon from "@mui/icons-material/Link";
 import { eventFormSchema } from "@/lib/validator";
 import { eventDefaultValues } from "@/constants";
 import SelectItem from "./SelectItem";
-import { UploadButton } from "@/utils/uploadthings";
 import FileUploader from "./FileUploader";
 import { useUploadThing } from "@/utils/uploadthings";
 import { createEvent, updateEvent } from "@/lib/actions/event.actions";
@@ -54,7 +53,6 @@ export const EventForm = ({ type, event, eventId }: EventFormProps) => {
     typeof user?.publicMetadata.userId === "string"
       ? user.publicMetadata.userId
       : "";
-  // console.log(userId);
 
   const form = useForm<z.infer<typeof eventFormSchema>>({
     resolver: zodResolver(eventFormSchema),
@@ -130,6 +128,7 @@ export const EventForm = ({ type, event, eventId }: EventFormProps) => {
         onSubmit={form.handleSubmit(onSubmit)}
         style={{
           display: "flex",
+          width: "100%",
           flexDirection: "column",
           gap: "20px",
           paddingTop: "40px",
@@ -185,18 +184,19 @@ export const EventForm = ({ type, event, eventId }: EventFormProps) => {
             display: "flex",
             justifyContent: "center",
             alignItems: "center",
+            paddingBottom: "20px",
           }}
         >
-            <FileUploader
-              imageUrl={form.watch("imageUrl")}
-              onFieldChange={(value) => form.setValue("imageUrl", value)}
-              setFiles={setFiles}
-            />
-            {form.formState.errors.imageUrl && (
-              <FormHelperText error>
-                {form.formState.errors.imageUrl.message}
-              </FormHelperText>
-            )}
+          <FileUploader
+            imageUrl={form.watch("imageUrl")}
+            onFieldChange={(value) => form.setValue("imageUrl", value)}
+            setFiles={setFiles}
+          />
+          {form.formState.errors.imageUrl && (
+            <FormHelperText error>
+              {form.formState.errors.imageUrl.message}
+            </FormHelperText>
+          )}
         </FormControl>
         <FormControl>
           <TextField
@@ -238,7 +238,7 @@ export const EventForm = ({ type, event, eventId }: EventFormProps) => {
                 variant="outlined"
                 label="Start Date"
                 placeholder="Start Date"
-                // autoComplete="Start date"
+                autoComplete="Start date"
                 InputProps={{
                   endAdornment: (
                     <InputAdornment position="end">
@@ -336,6 +336,12 @@ export const EventForm = ({ type, event, eventId }: EventFormProps) => {
           type="submit"
           variant="contained"
           disabled={form.formState.isSubmitting}
+          sx={{
+            display: "flex",
+            justifySelf: "center",
+            alignSelf: "center",
+            padding: "10px 20px",
+          }}
         >
           {form.formState.isSubmitting ? "Submit" : `${type} Event`}
         </Button>

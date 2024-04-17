@@ -6,6 +6,7 @@ import { useDropzone } from "@uploadthing/react/hooks";
 import { generateClientDropzoneAccept } from "uploadthing/client";
 
 import { Button } from "@mui/material";
+import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 import { convertFileToUrl } from "@/lib/utils";
 
 type FileUploaderProps = {
@@ -36,6 +37,7 @@ export function FileUploader({
         flexDirection: "column",
         justifyContent: "center",
         alignItems: "center",
+        padding: "20px",
       }}
       {...getRootProps()}
     >
@@ -52,17 +54,23 @@ export function FileUploader({
             flexDirection: "column",
             justifyContent: "center",
             alignItems: "center",
+            gap: "8px",
           }}
         >
-          <img
+          <CloudUploadIcon
+            sx={{ width: "50px", height: "50px", color: "#d3cbc5" }}
+          />
+          {/* <img
             src="/assets/icons/upload.svg"
             width={77}
             height={77}
             alt="file upload"
-          />
+          /> */}
           <h3>Drag photo here</h3>
           <p>SVG, PNG, JPG</p>
-          <Button type="button">Select from computer</Button>
+          <Button type="button" sx={{ padding: "10px 20px" }}>
+            Select from computer
+          </Button>
         </div>
       )}
     </div>

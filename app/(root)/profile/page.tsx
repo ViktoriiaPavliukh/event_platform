@@ -40,7 +40,8 @@ const Profile = ({ searchParams }: SearchParamProps) => {
 
     fetchOrders();
   }, [userId, ordersPage]);
-
+  console.log(orderedEvents);
+  console.log(organizedEvents);
   useEffect(() => {
     const fetchEvents = async () => {
       if (userId) {
@@ -60,6 +61,7 @@ const Profile = ({ searchParams }: SearchParamProps) => {
           display: "flex",
           flexDirection: "column",
           px: { xs: "10px", md: "40px" },
+          py: "20px",
           gap: "20px",
         }}
       >
@@ -110,7 +112,12 @@ const Profile = ({ searchParams }: SearchParamProps) => {
           <Typography variant="h6" align="center">
             Events Organised
           </Typography>
-          <Button component={Link} href="/events/create" variant="contained">
+          <Button
+            component={Link}
+            sx={{ textAlign: "center" }}
+            href="/events/create"
+            variant="contained"
+          >
             Create New Event
           </Button>
         </Box>

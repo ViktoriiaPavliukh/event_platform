@@ -13,6 +13,8 @@ const Footer = () => {
         flexDirection: "column",
         justifyContent: "center",
         alignItems: "center",
+        p: "20px",
+        textAlign: "center",
       }}
     >
       <Link href="/">
