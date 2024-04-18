@@ -18,41 +18,77 @@ const Profile = ({ searchParams }: SearchParamProps) => {
       ? user.publicMetadata.userId
       : "";
 
-  const [orderedEvents, setOrderedEvents] = useState<IEvent[]>([]);
-  const [organizedEvents, setOrganizedEvents] = useState<any>(null);
-  const [orderedEventsTotalPages, setOrderedEventsTotalPages] =
-    useState<number>(0);
-  const [organizedEventsTotalPages, setOrganizedEventsTotalPages] =
-    useState<number>(0);
+       const ordersPage = Number(searchParams?.ordersPage) || 1;
+       const eventsPage = Number(searchParams?.eventsPage) || 1;
 
-  const ordersPage = Number(searchParams?.ordersPage) || 1;
-  const eventsPage = Number(searchParams?.eventsPage) || 1;
+       // State to store fetched data
+       const [orderedEvents, setOrderedEvents] = useState<IEvent[]>([]);
+       const [organizedEvents, setOrganizedEvents] = useState<IEvent[]>([]);
+       const [orderedEventsTotalPages, setOrderedEventsTotalPages] =
+         useState<number>(0);
+       const [organizedEventsTotalPages, setOrganizedEventsTotalPages] =
+         useState<number>(0);
 
-  useEffect(() => {
-    const fetchOrders = async () => {
-      if (userId) {
-        const orders = await getOrdersByUser({ userId, page: ordersPage });
-        const events = orders?.data.map((order: IOrder) => order.event) || [];
-        setOrderedEvents(events);
-        setOrderedEventsTotalPages(orders?.totalPages || 1);
-      }
-    };
+       // Fetch orders and update state
+       useEffect(() => {
+         const fetchOrders = async () => {
+           const orders = await getOrdersByUser({ userId, page: ordersPage });
+           const orderedEventsData =
+             orders?.data.map((order: IOrder) => order.event) || [];
+           setOrderedEvents(orderedEventsData);
+           setOrderedEventsTotalPages(orders?.totalPages || 1);
+         };
 
-    fetchOrders();
-  }, [userId, ordersPage]);
-  console.log(orderedEvents);
-  console.log(organizedEvents);
-  useEffect(() => {
-    const fetchEvents = async () => {
-      if (userId) {
-        const events = await getEventsByUser({ userId, page: eventsPage });
-        setOrganizedEvents(events || null);
-        setOrganizedEventsTotalPages(events?.totalPages || 1);
-      }
-    };
+         fetchOrders();
+       }, [userId, ordersPage]);
 
-    fetchEvents();
-  }, [userId, eventsPage]);
+       // Fetch events and update state
+       useEffect(() => {
+         const fetchEvents = async () => {
+           const events = await getEventsByUser({ userId, page: eventsPage });
+           setOrganizedEvents(events?.data || []);
+           setOrganizedEventsTotalPages(events?.totalPages || 1);
+         };
+
+         fetchEvents();
+       }, [userId, eventsPage]);
+
+  // const [orderedEvents, setOrderedEvents] = useState<IEvent[]>([]);
+  // const [organizedEvents, setOrganizedEvents] = useState<any>(null);
+  // const [orderedEventsTotalPages, setOrderedEventsTotalPages] =
+  //   useState<number>(0);
+  // const [organizedEventsTotalPages, setOrganizedEventsTotalPages] =
+  //   useState<number>(0);
+  // console.log(searchParams.ordersPage);
+  // const ordersPage = Number(searchParams?.ordersPage) || 1;
+  // console.log("ordersPage", ordersPage);
+  // const eventsPage = Number(searchParams?.eventsPage) || 1;
+  // console.log("orderedEventsTotalPages", orderedEventsTotalPages);
+  // useEffect(() => {
+  //   const fetchOrders = async () => {
+  //     if (userId) {
+  //       const orders = await getOrdersByUser({ userId, page: ordersPage });
+  //       console.log("orders", orders);
+  //       const events = orders?.data.map((order: IOrder) => order.event) || [];
+
+  //       setOrderedEvents(events);
+  //       setOrderedEventsTotalPages(orders?.totalPages || 1);
+  //     }
+  //   };
+
+  //   fetchOrders();
+  // }, [userId, ordersPage]);
+  // useEffect(() => {
+  //   const fetchEvents = async () => {
+  //     if (userId) {
+  //       const events = await getEventsByUser({ userId, page: eventsPage });
+  //       setOrganizedEvents(events || null);
+  //       setOrganizedEventsTotalPages(events?.totalPages || 1);
+  //     }
+  //   };
+
+  //   fetchEvents();
+  // }, [userId, eventsPage]);
 
   return (
     <>
@@ -122,7 +158,7 @@ const Profile = ({ searchParams }: SearchParamProps) => {
           </Button>
         </Box>
         <Collections
-          data={organizedEvents?.data}
+          data={organizedEvents}
           emptyTitle="No events have been created yet"
           emptyStateSubtext="Go create some now"
           collectionType="Events_Organised"

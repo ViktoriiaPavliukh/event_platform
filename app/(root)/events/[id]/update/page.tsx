@@ -23,6 +23,8 @@ const UpdateEvent = async ({ params: { id } }: UpdateEventProps) => {
           flexDirection: "column",
           justifyContent: "center",
           alignItems: "center",
+          width: "90%",
+          margin: "0 auto",
         }}
       >
         <Typography variant="h4">Update Event</Typography>

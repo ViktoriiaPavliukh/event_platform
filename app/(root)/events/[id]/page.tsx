@@ -12,6 +12,11 @@ import { LocationOn } from "@mui/icons-material";
 import Collections from "@/components/shared/Collections";
 import PaymentButton from "../../../../components/shared/PaymentButton";
 
+const shortenUrl = (url: string): string => {
+  if (url.length <= 30) return url;
+  return url.substring(0, 30) + "...";
+};
+
 const EventDetails = async ({
   params: { id },
   searchParams,
@@ -23,6 +28,8 @@ const EventDetails = async ({
     eventId: event._id,
     page: searchParams.page as string,
   });
+
+  const shortenedUrl = shortenUrl(event.url);
 
   return (
     <>
@@ -47,20 +54,6 @@ const EventDetails = async ({
             borderRadius: "12px",
           }}
         >
-          <Typography variant="h3">{event.title}</Typography>
-          <Box
-            sx={{
-              width: { xs: "100%", md: "80%", lg: "70%" },
-            }}
-          >
-            <Image
-              src={event.imageUrl}
-              alt="hero image"
-              width={500}
-              height={500}
-              layout="responsive"
-            />
-          </Box>
           <Stack
             sx={{
               display: "flex",
@@ -73,18 +66,41 @@ const EventDetails = async ({
             <Typography
               sx={{
                 display: "flex",
+                backgroundColor: "#d3cbc5",
+                padding: "5px 10px",
+                borderRadius: "6px",
               }}
             >
-              {event.isFree ? "Free" : `${event.price} GBP`}
+              {event.isFree ? "Free" : `£${event.price}`}
             </Typography>
             <Typography
               sx={{
                 display: "flex",
+                backgroundColor: "#d3cbc5",
+                padding: "5px 10px",
+                borderRadius: "6px",
               }}
             >
               {event.category.name}
             </Typography>
           </Stack>
+          <Typography variant="h3" sx={{ textAlign: "center" }}>
+            {event.title}
+          </Typography>
+          <Box
+            sx={{
+              width: { xs: "100%", md: "80%", lg: "70%" },
+            }}
+          >
+            <Image
+              src={event.imageUrl}
+              alt="hero image"
+              width={500}
+              height={500}
+              layout="responsive"
+              style={{ borderRadius: "12px" }}
+            />
+          </Box>
           <Box
             sx={{
               display: "flex",
@@ -137,17 +153,14 @@ const EventDetails = async ({
               <Typography>{event.location}</Typography>
             </Box>
           </Box>
-          <Box>
+          <Box sx={{ width: "100%" }}>
             <Typography>{event.description}</Typography>
             {event.url && (
               <Link href={event.url} passHref>
-                <Typography>{event.url}</Typography>
+                <Typography title={event.url}>{shortenedUrl}</Typography>
               </Link>
             )}
           </Box>
-          <Typography>
-            {event.organiser.firstName} {event.organiser.lastName}
-          </Typography>
           <PaymentButton event={event} />
         </Box>
       </Box>
