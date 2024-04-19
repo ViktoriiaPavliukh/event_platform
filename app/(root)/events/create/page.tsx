@@ -1,6 +1,5 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import { useRouter } from "next/router";
 import { useTheme } from "@mui/material/styles";
 import EventForm from "@/components/shared/EventForm";
 import {
@@ -31,7 +30,9 @@ const CreateEvent = () => {
     setShowPassword((prevShowPassword) => !prevShowPassword);
   };
 
-  const handleMouseDownPassword = (event) => {
+  const handleMouseDownPassword = (
+    event: React.MouseEvent<HTMLButtonElement>
+  ) => {
     event.preventDefault();
   };
 
@@ -152,51 +153,6 @@ const CreateEvent = () => {
                 Please log in to continue.
               </Typography>
             )}
-
-            {/* <TextField
-              label="Enter Password"
-              type={showPassword ? "text" : "password"}
-              variant="outlined"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              sx={{
-                minWidth: "260px",
-              }}
-              InputProps={{
-                endAdornment: (
-                  <InputAdornment position="end">
-                    <IconButton
-                      onClick={handleClickShowPassword}
-                      onMouseDown={handleMouseDownPassword}
-                      edge="end"
-                    >
-                      {showPassword ? <VisibilityOff /> : <Visibility />}
-                    </IconButton>
-                  </InputAdornment>
-                ),
-              }}
-              onKeyDown={(e) => {
-                if (e.key === "Enter") {
-                  handlePasswordSubmit();
-                }
-              }}
-            />
-            {error && <FormHelperText error>{error}</FormHelperText>}
-            <Button
-              variant="contained"
-              onClick={handlePasswordSubmit}
-              sx={{ minWidth: "260px" }}
-            >
-              Submit
-            </Button> */}
-            {/* <Typography
-              variant="body1"
-              color="textSecondary"
-              sx={{ paddingTop: "20px" }}
-            >
-              Thank you for your cooperation in maintaining the integrity of our
-              event listings.
-            </Typography> */}
           </Box>
         ) : (
           <>
