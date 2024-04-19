@@ -7,7 +7,8 @@ export default authMiddleware({
     "/api/webhook/clerk",
     "/api/webhook/stripe",
     "/api/uploadthing",
-    "/api/calendar/handler",
+    "/api/events",
+    // "/api/calendar/handler",
   ],
   ignoredRoutes: [
     "/api/webhook/clerk",

@@ -151,9 +151,7 @@ export async function getOrdersByUser({
         },
       });
 
-    // Filter out any orders where the eventId is null
     const filteredOrders = orders.filter((order) => order.event !== null);
-    console.log(filteredOrders);
 
     const ordersCount = await Order.distinct("event._id").countDocuments(
       conditions

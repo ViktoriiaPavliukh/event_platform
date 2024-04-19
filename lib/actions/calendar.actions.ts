@@ -18,11 +18,7 @@ export async function addEventToGoogleCalendar(
   userEmail: any
 ) {
   try {
-    console.log(accessToken);
-    console.log(event);
-
     const calendarId = userEmail;
-
     const res = await axios.post(
       `https://www.googleapis.com/calendar/v3/calendars/${calendarId}/events`,
       event,
@@ -33,7 +29,6 @@ export async function addEventToGoogleCalendar(
         },
       }
     );
-
     console.log("Event added to Google Calendar successfully:", res.data);
   } catch (error) {
     console.error("Error adding event to Google Calendar:", error);

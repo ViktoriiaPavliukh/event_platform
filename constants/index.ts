@@ -4,6 +4,10 @@ export const navItems = [
     route: "/",
   },
   {
+    label: "All Events",
+    route: "/events",
+  },
+  {
     label: "Create Event",
     route: "/events/create",
   },

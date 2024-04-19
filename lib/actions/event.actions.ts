@@ -136,44 +136,23 @@ export async function updateEvent({ userId, event, path }: UpdateEventParams) {
     console.log("Path:", path);
 
     await connectToDatabase();
-
-    // Log the event ID being updated
     console.log("Updating event with ID:", event._id);
-
-    // Retrieve the event from the database
     const eventToUpdate = await Event.findById(event._id);
-
-    // Log the retrieved event
     console.log("Retrieved event from database:", eventToUpdate);
-
-    // Check if the event exists and if the user is authorized to update it
     if (!eventToUpdate || eventToUpdate.organizer.toHexString() !== userId) {
       throw new Error("Unauthorized or event not found");
     }
-
-    // Log the updated event data before saving
     console.log("Updating event data:", event);
-
-    // Update the event in the database
     const updatedEvent = await Event.findByIdAndUpdate(
       event._id,
       { ...event, category: event.categoryId },
       { new: true }
     );
-
-    // Log the updated event after saving
     console.log("Updated event:", updatedEvent);
-
-    // Revalidate the path
     revalidatePath(path);
-
-    // Return the updated event
     return JSON.parse(JSON.stringify(updatedEvent));
   } catch (error) {
-    // Log any errors that occur during the update process
     console.error("Error updating event:", error);
-
-    // Handle the error
     handleError(error);
   }
 }

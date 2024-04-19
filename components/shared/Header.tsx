@@ -199,6 +199,7 @@ const Header: React.FC<Props> = (props) => {
             "& .MuiDrawer-paper": {
               boxSizing: "border-box",
               width: drawerWidth,
+              textTransform: "uppercase",
             },
           }}
         >

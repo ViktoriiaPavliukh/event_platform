@@ -41,12 +41,11 @@ const CategoryFilter = () => {
   };
 
   return (
-    <FormControl variant="outlined" fullWidth>
+    <FormControl variant="outlined" sx={{ display: "flex", width: "100%" }}>
       <InputLabel id="category-select-label">Category</InputLabel>
       <Select
         labelId="category-select-label"
         label="Category"
-        defaultValue="All"
         onChange={(e) => onSelectCategory(e.target.value as string)}
       >
         <MenuItem value="All">All</MenuItem>
