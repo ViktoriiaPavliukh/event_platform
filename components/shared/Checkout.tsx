@@ -38,7 +38,7 @@ const Checkout = ({ event, userId }: { event: IEvent; userId: string }) => {
     let price = event.price;
     if (event.isFree) {
       if (customPrice !== "") {
-        price = parseFloat(customPrice);
+        price = parseFloat(customPrice.toString());
       } else {
         price = 0;
       }
