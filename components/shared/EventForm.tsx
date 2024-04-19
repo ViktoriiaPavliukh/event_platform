@@ -22,7 +22,7 @@ import { eventDefaultValues } from "@/constants";
 import SelectItem from "./SelectItem";
 import FileUploader from "./FileUploader";
 import { useUploadThing } from "@/utils/uploadthings";
-import { createEvent, updateEvent } from "@/lib/actions/event.actions";
+import { createEvent, updateEvent } from "../../lib/actions/event.actions";
 import "react-datepicker/dist/react-datepicker.css";
 import { useUser } from "@clerk/nextjs";
 import { IEvent } from "@/lib/database/models/event.model";
@@ -60,7 +60,6 @@ export const EventForm = ({ type, event, eventId }: EventFormProps) => {
   });
 
   async function onSubmit(values: z.infer<typeof eventFormSchema>) {
-    console.log(values);
     let uploadedImageUrl = values.imageUrl;
 
     if (files.length > 0) {
@@ -90,11 +89,36 @@ export const EventForm = ({ type, event, eventId }: EventFormProps) => {
       }
     }
 
+    // if (type === "Update") {
+    //   if (!eventId) {
+    //     router.back();
+    //     return;
+    //   }
+
+    //   try {
+    //     const updatedEvent = await updateEvent({
+    //       userId,
+    //       event: { ...values, imageUrl: uploadedImageUrl, _id: eventId },
+    //       path: `/events/${eventId}`,
+    //     });
+
+    //     if (updatedEvent) {
+    //       form.reset();
+    //       router.push(`/events/${updatedEvent._id}`);
+    //     }
+    //   } catch (error) {
+    //     console.log(error);
+    //   }
+    // }
     if (type === "Update") {
       if (!eventId) {
-        router.back();
+        // Handle missing eventId
         return;
       }
+
+      console.log("Updating event with eventId:", eventId);
+      console.log("Event data:", values);
+      console.log("UserId:", userId);
 
       try {
         const updatedEvent = await updateEvent({
@@ -103,12 +127,15 @@ export const EventForm = ({ type, event, eventId }: EventFormProps) => {
           path: `/events/${eventId}`,
         });
 
+        console.log("Updated event:", updatedEvent);
+
         if (updatedEvent) {
+          // Handle successful update
           form.reset();
           router.push(`/events/${updatedEvent._id}`);
         }
       } catch (error) {
-        console.log(error);
+        console.log("Error updating event:", error);
       }
     }
   }
@@ -255,6 +282,7 @@ export const EventForm = ({ type, event, eventId }: EventFormProps) => {
             placeholderText="End Date"
             selected={endDate}
             showTimeSelect
+            minDate={startDate}
             onChange={handleEndDateChange}
             timeInputLabel="Time:"
             dateFormat="MM/dd/yyyy h:mm aa"

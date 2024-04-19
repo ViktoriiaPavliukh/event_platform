@@ -23,6 +23,7 @@ const Footer = () => {
           alt="EventSpot Logo"
           width={100}
           height={38}
+          priority={true}
         />
       </Link>
       <Typography variant="body1" color="inherit">

@@ -6,6 +6,7 @@ type ThemeColor = "light" | "dark";
 const createThemeTemplate = (themeColor: ThemeColor): Theme => {
   const primaryColor = themeColor === "light" ? "#d3cbc5" : "#000";
   const bgColor = themeColor === "light" ? "#d3cbc5" : "#000";
+  const white = themeColor === "light" ? "#FFF" : "#FFF";
   const formColor = themeColor === "light" ? "#FFFFFF" : "#1E1E1E";
   const fontColorPrimary = themeColor === "light" ? "#1b1a1a" : "#FFF";
   const fontColorSecondary = themeColor === "light" ? "#FFF" : "#1b1a1a";

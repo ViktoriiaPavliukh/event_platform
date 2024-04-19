@@ -57,6 +57,7 @@ const Header: React.FC<Props> = (props) => {
           alt="EventSpot Logo"
           width={100}
           height={38}
+          priority={true}
         />
       </Link>
       <Divider />
@@ -118,6 +119,7 @@ const Header: React.FC<Props> = (props) => {
               alt="EventSpot Logo"
               width={100}
               height={38}
+              priority={true}
             />
           </Link>
           <List sx={{ display: { xs: "none", md: "flex" } }}>

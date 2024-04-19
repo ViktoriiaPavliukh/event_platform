@@ -45,7 +45,6 @@ const EventCard = ({ event, hasOrderLink, hidePrice }: CardProps) => {
         flexDirection: "column",
         gap: "10px",
         width: { xs: "300px", sm: "300px", md: "300px" },
-        height: "400px",
         backgroundColor: "#f8f4f0",
         borderRadius: "12px",
       }}
@@ -74,10 +73,9 @@ const EventCard = ({ event, hasOrderLink, hidePrice }: CardProps) => {
                 <Image
                   src={event.imageUrl}
                   alt="hero image"
-                  width={150}
-                  height={150}
-                  style={{ borderRadius: "12px" }}
-                  // layout="responsive"
+                  width={260}
+                  height={200}
+                  style={{ borderRadius: "6px" }}
                   priority={true}
                 />
               </Box>
@@ -100,7 +98,7 @@ const EventCard = ({ event, hasOrderLink, hidePrice }: CardProps) => {
                         borderRadius: "6px",
                       }}
                     >
-                      {event.isFree ? "Free" : `${event.price} GBP`}
+                      {event.isFree ? "Free" : `£${event.price}`}
                     </Typography>
                   )}
                   {event.category.name ? (
@@ -158,8 +156,8 @@ const EventCard = ({ event, hasOrderLink, hidePrice }: CardProps) => {
           <Box
             sx={{
               position: "absolute",
-              bottom: "20px",
-              right: "10px",
+              top: "26px",
+              right: "24px",
               zIndex: "10",
               display: "flex",
               flexDirection: "column",
@@ -167,8 +165,8 @@ const EventCard = ({ event, hasOrderLink, hidePrice }: CardProps) => {
               gap: "5px",
               justifyContent: "end",
               alignItems: "end",
-              // visibility: isHovered ? "visible" : "hidden",
               background: theme.palette.primary.main,
+              borderRadius: "6px",
             }}
           >
             <Link href={`/events/${event._id}/update`}>
