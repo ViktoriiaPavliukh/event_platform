@@ -29,6 +29,8 @@ const EventDetails = async ({
     page: searchParams.page as string,
   });
 
+  console.log(relatedEvents);
+
   const shortenedUrl = shortenUrl(event.url);
 
   return (
@@ -181,7 +183,7 @@ const EventDetails = async ({
           emptyStateSubtext="Come back later"
           collectionType="All_events"
           limit={3}
-          page={searchParams.page as string}
+          page={Number(searchParams?.page) || 1}
           totalPages={relatedEvents?.totalPages}
         />
       </Box>
