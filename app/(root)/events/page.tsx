@@ -6,7 +6,7 @@ import Collections from "@/components/shared/Collections";
 import { getAllEvents } from "@/lib/actions/event.actions";
 import { SearchParamProps } from "@/types";
 
-export default async function Home({ searchParams }: SearchParamProps) {
+export default async function EventList({ searchParams }: SearchParamProps) {
   const page = Number(searchParams?.page) || 1;
   const searchText = (searchParams?.query as string) || "";
   const category = (searchParams?.category as string) || "";
@@ -18,7 +18,21 @@ export default async function Home({ searchParams }: SearchParamProps) {
   });
 
   return (
-    <Box sx={{ px: { xs: "40px", md: "40px" } }}>
+    <Box
+      sx={{
+        px: { xs: "40px", md: "60px" },
+        maxWidth: "1200px",
+        margin: "0 auto",
+      }}
+    >
+      <Typography
+        variant="h4"
+        align="center"
+        color="textSecondary"
+        sx={{ textTransform: "uppercase", pt: "20px" }}
+      >
+        All Events
+      </Typography>
       <Box
         sx={{
           display: "flex",

@@ -75,7 +75,12 @@ const Profile = ({ searchParams }: SearchParamProps) => {
             gap: "20px",
           }}
         >
-          <Typography variant="h6" align="center">
+          <Typography
+            variant="h6"
+            align="center"
+            color="textSecondary"
+            sx={{ textTransform: "uppercase" }}
+          >
             My Tickets
           </Typography>
           <Button
@@ -109,7 +114,12 @@ const Profile = ({ searchParams }: SearchParamProps) => {
             gap: "20px",
           }}
         >
-          <Typography variant="h6" align="center">
+          <Typography
+            variant="h6"
+            align="center"
+            color="textSecondary"
+            sx={{ textTransform: "uppercase" }}
+          >
             Events Organised
           </Typography>
           <Button

@@ -57,7 +57,9 @@ const CreateEvent = () => {
           gap: "40px",
         }}
       >
-        <Typography variant="h4">Create Event</Typography>
+        <Typography variant="h4" color="textSecondary" sx={{textTransform: "uppercase"}}>
+          Create Event
+        </Typography>
         {!isAuthenticated ? (
           <Box
             sx={{
