@@ -135,7 +135,6 @@ export async function getOrdersByUser({
 
     const skipAmount = (Number(page) - 1) * limit;
     const conditions = { buyer: userId };
-
     const orders = await Order.distinct("event._id")
       .find(conditions)
       .sort({ startDateTime: "desc" })
@@ -150,9 +149,7 @@ export async function getOrdersByUser({
           select: "_id firstName lastName",
         },
       });
-
     const filteredOrders = orders.filter((order) => order.event !== null);
-
     const ordersCount = await Order.distinct("event._id").countDocuments(
       conditions
     );

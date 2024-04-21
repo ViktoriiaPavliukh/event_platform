@@ -1,7 +1,6 @@
 import { Typography, Box, Stack, Button } from "@mui/material";
 import Search from "@/components/shared/Search";
 import CategoryFilter from "@/components/shared/CategoryFilter";
-import styles from "./../page.module.css";
 import Collections from "@/components/shared/Collections";
 import { getAllEvents } from "@/lib/actions/event.actions";
 import { SearchParamProps } from "@/types";

@@ -40,8 +40,7 @@ const Profile = ({ searchParams }: SearchParamProps) => {
 
     fetchOrders();
   }, [userId, ordersPage]);
-  console.log(orderedEvents);
-  console.log(organizedEvents);
+
   useEffect(() => {
     const fetchEvents = async () => {
       if (userId) {

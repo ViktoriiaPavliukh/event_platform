@@ -1,10 +1,9 @@
 import type { Metadata } from "next";
 import Head from "next/head";
 import { Mulish } from "next/font/google";
-import { GoogleOAuthProvider} from "@react-oauth/google";
+import { GoogleOAuthProvider } from "@react-oauth/google";
 import { ClerkProvider } from "@clerk/nextjs";
 import { ThemeProvider } from "@mui/material/styles";
-import { createClient } from "@supabase/supabase-js";
 import { lightTheme, darkTheme } from "./theme";
 import "./globals.css";
 
@@ -18,7 +17,7 @@ export const metadata: Metadata = {
   title: "EventSpot",
   description: "Platform allows to discover upcoming events",
   icons: {
-    icon: "/assets/images/logo.svg",
+    icon: "/assets/icons/logo.svg",
   },
 };
 
@@ -29,7 +28,6 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-
   const isDarkModeEnabled = false;
   const clientId = process.env.CLIENT_ID || "";
   return (

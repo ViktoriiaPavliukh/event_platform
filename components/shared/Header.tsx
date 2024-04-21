@@ -51,7 +51,7 @@ const Header: React.FC<Props> = (props) => {
     >
       <Link href="/">
         <Image
-          src="/assets/images/logo.svg"
+          src="/assets/icons/logo.svg"
           alt="EventSpot Logo"
           width={100}
           height={38}
@@ -117,7 +117,7 @@ const Header: React.FC<Props> = (props) => {
           </IconButton>
           <Link href="/">
             <Image
-              src="/assets/images/logo.svg"
+              src="/assets/icons/logo.svg"
               alt="EventSpot Logo"
               width={100}
               height={38}
