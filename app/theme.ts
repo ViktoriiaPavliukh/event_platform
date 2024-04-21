@@ -9,7 +9,7 @@ const createThemeTemplate = (themeColor: ThemeColor): Theme => {
   const white = themeColor === "light" ? "#FFF" : "#FFF";
   const formColor = themeColor === "light" ? "#FFFFFF" : "#1E1E1E";
   const fontColorPrimary = themeColor === "light" ? "#1b1a1a" : "#FFF";
-  const fontColorSecondary = themeColor === "light" ? "#FFF" : "#1b1a1a";
+  const fontColorSecondary = themeColor === "light" ? "#585858" : "585858";
   const btnHover = themeColor === "light" ? "#cbc3bd" : "#FFF";
 
   return createTheme({
@@ -24,7 +24,7 @@ const createThemeTemplate = (themeColor: ThemeColor): Theme => {
       MuiButton: {
         styleOverrides: {
           root: {
-            color: themeColor === "light" ? "#1b1a1a" : "#FFF", 
+            color: themeColor === "light" ? "#1b1a1a" : "#FFF",
             backgroundColor: primaryColor,
             "&:hover": {
               backgroundColor: btnHover,
@@ -32,17 +32,17 @@ const createThemeTemplate = (themeColor: ThemeColor): Theme => {
             },
           },
           contained: {
-            boxShadow: "none", 
+            boxShadow: "none",
           },
         },
       },
       MuiSwitch: {
         styleOverrides: {
           root: {
-            color: themeColor === "light" ? "#FFF" : "#FFF", 
+            color: themeColor === "light" ? "#FFF" : "#FFF",
           },
           thumb: {
-            color: themeColor === "light" ? "#FFF" : "#FFF", 
+            color: themeColor === "light" ? "#FFF" : "#FFF",
           },
           track: {
             backgroundColor: themeColor === "light" ? "#FFF" : "#FFF",
@@ -64,7 +64,7 @@ const createThemeTemplate = (themeColor: ThemeColor): Theme => {
       MuiInputLabel: {
         styleOverrides: {
           root: {
-            color: fontColorPrimary, 
+            color: fontColorPrimary,
           },
         },
       },
@@ -83,14 +83,9 @@ const createThemeTemplate = (themeColor: ThemeColor): Theme => {
       primary: {
         main: primaryColor,
         light: bgColor,
-        dark: bgColor,
+        dark: fontColorSecondary,
         contrastText: fontColorPrimary,
       },
-      // background: {
-      //   default: backgroundColor,
-      //   paper: backgroundColor,
-      // },
-      // Add more palette colors if needed
     },
     typography: {
       fontFamily: "Mulish, sans-serif",

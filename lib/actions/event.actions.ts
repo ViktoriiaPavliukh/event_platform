@@ -86,7 +86,7 @@ export async function getAllEvents({
 
     const skipAmount = (Number(page) - 1) * limit;
     const eventsQuery = Event.find(conditions)
-      .sort({ createdAt: "desc" })
+      .sort({ startDateTime: "desc" })
       .skip(skipAmount)
       .limit(limit);
 
@@ -183,7 +183,7 @@ export async function getRelatedEventsByCategory({
     };
 
     const eventsQuery = Event.find(conditions)
-      .sort({ createdAt: "desc" })
+      .sort({ startDateTime: "desc" })
       .skip(skipAmount)
       .limit(limit);
 
@@ -211,7 +211,7 @@ export async function getEventsByUser({
     const skipAmount = (page - 1) * limit;
 
     const eventsQuery = Event.find(conditions)
-      .sort({ createdAt: "desc" })
+      .sort({ startDateTime: "desc" })
       .skip(skipAmount)
       .limit(limit);
 

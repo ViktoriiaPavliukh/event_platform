@@ -37,6 +37,7 @@ const EventCard = ({ event, hasOrderLink, hidePrice }: CardProps) => {
     event.organiser._id &&
     userId === event.organiser._id.toString();
   const [isHovered, setIsHovered] = useState(false);
+  const isEventOverdue = new Date(event.endDateTime) < new Date();
 
   return (
     <Card
@@ -45,113 +46,119 @@ const EventCard = ({ event, hasOrderLink, hidePrice }: CardProps) => {
         flexDirection: "column",
         gap: "10px",
         width: { xs: "300px", sm: "300px", md: "300px" },
-        backgroundColor: "#f8f4f0",
+        backgroundColor: isEventOverdue ? "#f5f5f5" : "#f8f4f0",
         borderRadius: "12px",
+        filter: isEventOverdue ? "brightness(0.8)" : "none",
       }}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
-      <CardActionArea sx={{ height: "100%", paddingBottom: "20px" }}>
-        <Link href={`/events/${event._id}`}>
-          {event && (
+      <CardActionArea
+        component={Link}
+        href={
+          hasOrderLink ? `/orders?eventId=${event._id}` : `/events/${event._id}`
+        }
+        sx={{ height: "100%", paddingBottom: "20px" }}
+      >
+        {event && (
+          <Box
+            sx={{
+              padding: "20px",
+              position: "relative",
+              zIndex: "0",
+            }}
+          >
             <Box
               sx={{
-                padding: "20px",
-                position: "relative",
-                zIndex: "0",
+                display: "flex",
+                width: "100%",
+
+                justifyContent: "center",
+                alignItems: "center",
               }}
             >
-              <Box
+              <Image
+                src={event.imageUrl}
+                alt="hero image"
+                width={260}
+                height={200}
+                style={{ borderRadius: "6px" }}
+                priority={true}
+              />
+            </Box>
+            <CardContent
+              sx={{ display: "flex", flexDirection: "column", gap: "10px" }}
+            >
+              <Stack
                 sx={{
                   display: "flex",
-                  width: "100%",
-
-                  justifyContent: "center",
+                  flexDirection: "row",
+                  justifyContent: "space-between",
                   alignItems: "center",
                 }}
               >
-                <Image
-                  src={event.imageUrl}
-                  alt="hero image"
-                  width={260}
-                  height={200}
-                  style={{ borderRadius: "6px" }}
-                  priority={true}
-                />
-              </Box>
-              <CardContent
-                sx={{ display: "flex", flexDirection: "column", gap: "10px" }}
-              >
-                <Stack
-                  sx={{
-                    display: "flex",
-                    flexDirection: "row",
-                    justifyContent: "space-between",
-                    alignItems: "center",
-                  }}
-                >
-                  {!hidePrice && (
-                    <Typography
-                      sx={{
-                        backgroundColor: theme.palette.primary.main,
-                        padding: "5px 10px",
-                        borderRadius: "6px",
-                      }}
-                    >
-                      {event.isFree ? "Free" : `£${event.price}`}
-                    </Typography>
-                  )}
-                  {event.category.name ? (
-                    <Typography
-                      sx={{
-                        backgroundColor: theme.palette.primary.main,
-                        padding: "5px 10px",
-                        borderRadius: "6px",
-                      }}
-                    >
-                      {event.category.name}
-                    </Typography>
-                  ) : null}
-                </Stack>
-                <Typography>
-                  {formatDateTime(event.startDateTime).dateTime}
-                </Typography>
-                <Typography>{event.title}</Typography>
-                {hasOrderLink && (
-                  <Stack
+                {!hidePrice && (
+                  <Typography
                     sx={{
-                      display: "flex",
-                      flexDirection: "column",
-                      justifySelf: "baseline",
-                      alignSelf: "left",
-                      justifyContent: "baseline",
-                      alignItems: "baseline",
+                      backgroundColor: theme.palette.primary.main,
+                      padding: "5px 10px",
+                      borderRadius: "6px",
                     }}
                   >
-                    <Link href={`/orders?eventId=${event._id}`}>
-                      <Box
-                        sx={{
-                          display: "flex",
-                          justifyContent: "center",
-                          alignItems: "center",
-                          width: "fit-content",
-                          backgroundColor: theme.palette.primary.main,
-                          padding: "5px 10px",
-                          borderRadius: "6px",
-                        }}
-                      >
-                        <Typography sx={{ textWrap: "nowrap" }}>
-                          Order Details
-                        </Typography>
-                        <ArrowOutwardIcon />
-                      </Box>
-                    </Link>
-                  </Stack>
+                    {event.isFree ? "Free" : `£${event.price}`}
+                  </Typography>
                 )}
-              </CardContent>
-            </Box>
-          )}
-        </Link>
+                {event.category.name ? (
+                  <Typography
+                    sx={{
+                      backgroundColor: theme.palette.primary.main,
+                      padding: "5px 10px",
+                      borderRadius: "6px",
+                    }}
+                  >
+                    {event.category.name}
+                  </Typography>
+                ) : null}
+              </Stack>
+              <Typography>
+                {formatDateTime(event.startDateTime).dateTime}
+              </Typography>
+              <Typography>{event.title}</Typography>
+              {hasOrderLink && (
+                <Stack
+                  component="div"
+                  sx={{
+                    display: "flex",
+                    flexDirection: "column",
+                    justifySelf: "baseline",
+                    alignSelf: "left",
+                    justifyContent: "baseline",
+                    alignItems: "baseline",
+                  }}
+                >
+                  <Box
+                    sx={{
+                      display: "flex",
+                      justifyContent: "center",
+                      alignItems: "center",
+                      width: "fit-content",
+                      backgroundColor: theme.palette.primary.main,
+                      padding: "5px 10px",
+                      borderRadius: "6px",
+                      position: "absolute",
+                      bottom: "5px",
+                    }}
+                  >
+                    <Typography sx={{ textWrap: "nowrap" }}>
+                      Order Details
+                    </Typography>
+                    <ArrowOutwardIcon />
+                  </Box>
+                </Stack>
+              )}
+            </CardContent>
+          </Box>
+        )}
         {isEventCreator && !hidePrice && (
           <Box
             sx={{
@@ -169,9 +176,9 @@ const EventCard = ({ event, hasOrderLink, hidePrice }: CardProps) => {
               borderRadius: "6px",
             }}
           >
-            <Link href={`/events/${event._id}/update`}>
+            {/* <Link href={`/events/${event._id}/update`}>
               <EditNoteIcon sx={{ paddingLeft: "3px" }} />
-            </Link>
+            </Link> */}
             <DeleteModal eventId={event._id} />
           </Box>
         )}

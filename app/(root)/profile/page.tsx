@@ -83,14 +83,11 @@ const Profile = ({ searchParams }: SearchParamProps) => {
           >
             My Tickets
           </Typography>
-          <Button
-            component={Link}
-            href="/#events"
-            variant="contained"
-            sx={{ textAlign: "center" }}
-          >
-            Explore More Events
-          </Button>
+          <Link href="/events">
+            <Button variant="contained" sx={{ textAlign: "center" }}>
+              Explore More Events
+            </Button>
+          </Link>
         </Box>
         <Suspense fallback={<Loading />}>
           <Collections
@@ -122,14 +119,11 @@ const Profile = ({ searchParams }: SearchParamProps) => {
           >
             Events Organised
           </Typography>
-          <Button
-            component={Link}
-            sx={{ textAlign: "center" }}
-            href="/events/create"
-            variant="contained"
-          >
-            Create New Event
-          </Button>
+          <Link href="/events/create">
+            <Button sx={{ textAlign: "center" }} variant="contained">
+              Create New Event
+            </Button>
+          </Link>
         </Box>
         <Collections
           data={organizedEvents?.data}

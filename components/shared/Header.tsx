@@ -14,7 +14,6 @@ import {
   ListItemButton,
   Toolbar,
   Button,
-  Switch,
 } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
 import Image from "next/image";
@@ -25,24 +24,16 @@ import Link from "next/link";
 import { useUser } from "@clerk/nextjs";
 import { navItems } from "@/constants";
 import { usePathname } from "next/navigation";
-import { lightTheme, darkTheme } from "../../app/theme";
 
 // @ts-ignore
 import type { Props } from "@/types";
-import { width } from "@mui/system";
 
 const drawerWidth = 240;
 
 const Header: React.FC<Props> = (props) => {
   const { window } = props;
   const [mobileOpen, setMobileOpen] = useState(false);
-  const [checked, setChecked] = useState(true);
-  const [isDarkModeEnabled, setIsDarkModeEnabled] = useState(false);
   const pathname = usePathname();
-  const handleChange = () => {
-    setChecked((prevChecked) => !prevChecked);
-  };
-
   const handleDrawerToggle = () => {
     setMobileOpen((prevState) => !prevState);
   };
@@ -50,7 +41,14 @@ const Header: React.FC<Props> = (props) => {
   const theme = useTheme();
 
   const drawer = (
-    <Box onClick={handleDrawerToggle} sx={{ textAlign: "center" }}>
+    <Box
+      onClick={handleDrawerToggle}
+      sx={{
+        textAlign: "center",
+        backgroundColor: theme.palette.primary.main,
+        height: "100vh",
+      }}
+    >
       <Link href="/">
         <Image
           src="/assets/images/logo.svg"
@@ -68,7 +66,11 @@ const Header: React.FC<Props> = (props) => {
             <ListItem key={item.route} disablePadding>
               <ListItemButton sx={{ paddingLeft: "40px", py: "16px" }}>
                 <Link
-                  color={isActive ? theme.palette.primary.main : "inherit"}
+                  color={
+                    isActive
+                      ? theme.palette.primary.dark
+                      : theme.palette.primary.dark
+                  }
                   href={item.route}
                 >
                   {item.label}
@@ -137,7 +139,7 @@ const Header: React.FC<Props> = (props) => {
                       textAlign: "center",
                       fontSize: "16px",
                       textWrap: "nowrap",
-                      color: isActive ? "#fff" : "inherit",
+                      color: isActive ? "#fff" : theme.palette.primary.dark,
                       "&:hover": {
                         color: "#fff",
                       },
@@ -155,7 +157,6 @@ const Header: React.FC<Props> = (props) => {
               );
             })}
           </List>
-          <Switch />
           {user ? (
             <Box
               sx={{
@@ -170,7 +171,7 @@ const Header: React.FC<Props> = (props) => {
               </SignedIn>
               <SignOutButton>
                 <Link href="/">
-                  <Button sx={{ color: theme.palette.primary.contrastText }}>
+                  <Button sx={{ color: theme.palette.primary.dark }}>
                     Logout
                   </Button>
                 </Link>
@@ -178,9 +179,7 @@ const Header: React.FC<Props> = (props) => {
             </Box>
           ) : (
             <Link href="/sign-in">
-              <Button sx={{ color: theme.palette.primary.contrastText }}>
-                Login
-              </Button>
+              <Button sx={{ color: theme.palette.primary.dark }}>Login</Button>
             </Link>
           )}
         </Toolbar>

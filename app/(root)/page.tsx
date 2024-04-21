@@ -96,20 +96,6 @@ export default async function Home({ searchParams }: SearchParamProps) {
               height={230}
               priority={true}
             />
-            {/* <Image
-              src="/assets/images/sofa.png"
-              alt="sofa"
-              width={230}
-              height={230}
-              priority={true}
-            />
-            <Image
-              src="/assets/images/city.webp"
-              alt="city"
-              width={230}
-              height={230}
-              priority={true}
-            /> */}
           </Box>
           <Box
             sx={{

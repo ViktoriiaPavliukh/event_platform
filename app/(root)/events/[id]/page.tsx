@@ -29,8 +29,6 @@ const EventDetails = async ({
     page: searchParams.page as string,
   });
 
-  console.log(relatedEvents);
-
   const shortenedUrl = shortenUrl(event.url);
 
   return (
@@ -86,7 +84,11 @@ const EventDetails = async ({
               {event.category.name}
             </Typography>
           </Stack>
-          <Typography variant="h3" sx={{ textAlign: "center" }}>
+          <Typography
+            color="textSecondary"
+            variant="h3"
+            sx={{ textAlign: "center" }}
+          >
             {event.title}
           </Typography>
           <Box
@@ -120,6 +122,7 @@ const EventDetails = async ({
                 justifyContent: "center",
                 alignItems: "center",
                 gap: "10px",
+                color: "GrayText",
               }}
             >
               <CalendarMonthIcon />
@@ -149,17 +152,27 @@ const EventDetails = async ({
                 justifyContent: "center",
                 alignItems: "center",
                 gap: "10px",
+                color: "GrayText",
               }}
             >
               <LocationOn />
               <Typography>{event.location}</Typography>
             </Box>
           </Box>
-          <Box sx={{ width: "100%" }}>
-            <Typography>{event.description}</Typography>
+          <Box
+            sx={{
+              width: "100%",
+              display: "flex",
+              flexDirection: "column",
+              gap: "20px",
+            }}
+          >
+            <Typography sx={{textAlign: "justify"}}>{event.description}</Typography>
             {event.url && (
               <Link href={event.url} passHref>
-                <Typography title={event.url}>{shortenedUrl}</Typography>
+                <Typography color="textSecondary" title={event.url}>
+                  {shortenedUrl}
+                </Typography>
               </Link>
             )}
           </Box>
@@ -176,7 +189,13 @@ const EventDetails = async ({
           gap: "20px",
         }}
       >
-        <Typography variant="h4">Related Events</Typography>
+        <Typography
+          variant="h6"
+          color="textSecondary"
+          sx={{ textTransform: "uppercase" }}
+        >
+          Related Events
+        </Typography>
         <Collections
           data={relatedEvents?.data}
           emptyTitle="No Events Found"

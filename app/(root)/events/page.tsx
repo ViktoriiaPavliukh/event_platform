@@ -23,6 +23,7 @@ export default async function EventList({ searchParams }: SearchParamProps) {
         px: { xs: "40px", md: "60px" },
         maxWidth: "1200px",
         margin: "0 auto",
+        minHeight: "90vh",
       }}
     >
       <Typography

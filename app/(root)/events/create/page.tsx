@@ -57,7 +57,11 @@ const CreateEvent = () => {
           gap: "40px",
         }}
       >
-        <Typography variant="h4" color="textSecondary" sx={{textTransform: "uppercase"}}>
+        <Typography
+          variant="h4"
+          color="textSecondary"
+          sx={{ textTransform: "uppercase", textAlign: "center" }}
+        >
           Create Event
         </Typography>
         {!isAuthenticated ? (
@@ -83,7 +87,11 @@ const CreateEvent = () => {
               a staff member, you can explore all events on the platform by
               clicking the button below.
             </Typography>
-            <Button variant="outlined" href="/" sx={{ minWidth: "260px" }}>
+            <Button
+              variant="outlined"
+              href="/events"
+              sx={{ minWidth: "260px" }}
+            >
               Explore All Events
             </Button>
 
