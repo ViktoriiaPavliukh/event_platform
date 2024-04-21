@@ -19,7 +19,7 @@ const Footer = () => {
     >
       <Link href="/">
         <Image
-          src="/assets/images/logo.svg"
+          src="/assets/icons/logo.svg"
           alt="EventSpot Logo"
           width={100}
           height={38}
