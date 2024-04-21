@@ -178,9 +178,11 @@ const Collections: React.FC<CollectionProps> = ({
                             <Typography
                               className="show-text"
                               sx={{
+                                fontSize: "14px",
                                 display: "none",
                                 visibility: "hidden",
                                 transition: "all 0.5s ease",
+                                pl: "5px",
                               }}
                             >
                               Add to Google Calendar

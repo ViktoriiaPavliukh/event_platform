@@ -138,7 +138,7 @@ export async function getOrdersByUser({
 
     const orders = await Order.distinct("event._id")
       .find(conditions)
-      .sort({ createdAt: "desc" })
+      .sort({ startDateTime: "desc" })
       .skip(skipAmount)
       .limit(limit)
       .populate({
@@ -151,9 +151,7 @@ export async function getOrdersByUser({
         },
       });
 
-    // Filter out any orders where the eventId is null
     const filteredOrders = orders.filter((order) => order.event !== null);
-    console.log(filteredOrders);
 
     const ordersCount = await Order.distinct("event._id").countDocuments(
       conditions

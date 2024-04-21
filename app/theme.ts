@@ -9,10 +9,8 @@ const createThemeTemplate = (themeColor: ThemeColor): Theme => {
   const white = themeColor === "light" ? "#FFF" : "#FFF";
   const formColor = themeColor === "light" ? "#FFFFFF" : "#1E1E1E";
   const fontColorPrimary = themeColor === "light" ? "#1b1a1a" : "#FFF";
-  const fontColorSecondary = themeColor === "light" ? "#FFF" : "#1b1a1a";
+  const fontColorSecondary = themeColor === "light" ? "#585858" : "585858";
   const btnHover = themeColor === "light" ? "#cbc3bd" : "#FFF";
-
-  const defaultColor = "#1b1a1a";
 
   return createTheme({
     components: {
@@ -26,32 +24,32 @@ const createThemeTemplate = (themeColor: ThemeColor): Theme => {
       MuiButton: {
         styleOverrides: {
           root: {
-            color: themeColor === "light" ? "#1b1a1a" : "#FFF", // Default button text color
-            backgroundColor: primaryColor, // Default button background color
+            color: themeColor === "light" ? "#1b1a1a" : "#FFF",
+            backgroundColor: primaryColor,
             "&:hover": {
               backgroundColor: btnHover,
               color: fontColorSecondary,
             },
           },
           contained: {
-            boxShadow: "none", // Remove button box shadow
+            boxShadow: "none",
           },
         },
       },
       MuiSwitch: {
         styleOverrides: {
           root: {
-            color: themeColor === "light" ? "#FFF" : "#FFF", // Default color for the switch button
+            color: themeColor === "light" ? "#FFF" : "#FFF",
           },
           thumb: {
-            color: themeColor === "light" ? "#FFF" : "#FFF", // Default color for the switch thumb
+            color: themeColor === "light" ? "#FFF" : "#FFF",
           },
           track: {
-            backgroundColor: themeColor === "light" ? "#FFF" : "#FFF", // Default background color for the switch track
+            backgroundColor: themeColor === "light" ? "#FFF" : "#FFF",
           },
           switchBase: {
             "&.Mui-checked": {
-              color: themeColor === "light" ? "#FFF" : "#FFF", // Color for the switch button when checked
+              color: themeColor === "light" ? "#FFF" : "#FFF",
             },
           },
         },
@@ -59,20 +57,19 @@ const createThemeTemplate = (themeColor: ThemeColor): Theme => {
       MuiInputBase: {
         styleOverrides: {
           input: {
-            color: fontColorPrimary, // Change font color of form elements
+            color: fontColorPrimary,
           },
         },
       },
       MuiInputLabel: {
         styleOverrides: {
           root: {
-            color: fontColorPrimary, // Change font color of input label
+            color: fontColorPrimary,
           },
         },
       },
     },
     breakpoints: {
-      // Define your breakpoints
       values: {
         xs: 0,
         sm: 600,
@@ -86,20 +83,14 @@ const createThemeTemplate = (themeColor: ThemeColor): Theme => {
       primary: {
         main: primaryColor,
         light: bgColor,
-        dark: bgColor,
+        dark: fontColorSecondary,
         contrastText: fontColorPrimary,
       },
-      // background: {
-      //   default: backgroundColor,
-      //   paper: backgroundColor,
-      // },
-      // Add more palette colors if needed
     },
     typography: {
       fontFamily: "Mulish, sans-serif",
       fontSize: 16,
     },
-    // Add more theme options as needed
   });
 };
 

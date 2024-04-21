@@ -1,15 +1,11 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import { Box, Typography, InputAdornment, TextField } from "@mui/material";
+import { Box, InputAdornment, TextField } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 import { formUrlQuery, removeKeysFromQuery } from "@/lib/utils";
 import { useRouter, useSearchParams } from "next/navigation";
 
-const Search = ({
-  placeholder = "Search title...",
-}: {
-  placeholder?: string;
-}) => {
+const Search = () => {
   const [query, setQuery] = useState("");
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -38,22 +34,20 @@ const Search = ({
   }, [query, searchParams, router]);
 
   return (
-    <Box sx={{ display: "flex" }}>
-      <TextField
-        variant="outlined"
-        placeholder={placeholder}
-        value={query}
-        sx={{ display: "flex", width: { xs: "87vw", md: "45vw" } }}
-        onChange={(e) => setQuery(e.target.value)}
-        InputProps={{
-          startAdornment: (
-            <InputAdornment position="start">
-              <SearchIcon />
-            </InputAdornment>
-          ),
-        }}
-      />
-    </Box>
+    <TextField
+      label="Search title"
+      variant="outlined"
+      value={query}
+      sx={{ display: "flex", width: "100%" }}
+      onChange={(e) => setQuery(e.target.value)}
+      InputProps={{
+        endAdornment: (
+          <InputAdornment position="end">
+            <SearchIcon />
+          </InputAdornment>
+        ),
+      }}
+    />
   );
 };
 
