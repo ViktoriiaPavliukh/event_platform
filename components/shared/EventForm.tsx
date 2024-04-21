@@ -4,7 +4,6 @@ import {
   Button,
   FormControl,
   FormHelperText,
-  Box,
   InputAdornment,
   FormControlLabel,
   Checkbox,
@@ -89,36 +88,10 @@ export const EventForm = ({ type, event, eventId }: EventFormProps) => {
       }
     }
 
-    // if (type === "Update") {
-    //   if (!eventId) {
-    //     router.back();
-    //     return;
-    //   }
-
-    //   try {
-    //     const updatedEvent = await updateEvent({
-    //       userId,
-    //       event: { ...values, imageUrl: uploadedImageUrl, _id: eventId },
-    //       path: `/events/${eventId}`,
-    //     });
-
-    //     if (updatedEvent) {
-    //       form.reset();
-    //       router.push(`/events/${updatedEvent._id}`);
-    //     }
-    //   } catch (error) {
-    //     console.log(error);
-    //   }
-    // }
     if (type === "Update") {
       if (!eventId) {
-        // Handle missing eventId
         return;
       }
-
-      console.log("Updating event with eventId:", eventId);
-      console.log("Event data:", values);
-      console.log("UserId:", userId);
 
       try {
         const updatedEvent = await updateEvent({
@@ -127,10 +100,7 @@ export const EventForm = ({ type, event, eventId }: EventFormProps) => {
           path: `/events/${eventId}`,
         });
 
-        console.log("Updated event:", updatedEvent);
-
         if (updatedEvent) {
-          // Handle successful update
           form.reset();
           router.push(`/events/${updatedEvent._id}`);
         }

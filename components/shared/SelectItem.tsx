@@ -7,7 +7,6 @@ import {
   Dialog,
   DialogActions,
   DialogContent,
-  DialogContentText,
   DialogTitle,
   FormControl,
   TextField,
@@ -26,7 +25,6 @@ type DropdownProps = {
 const SelectItem = ({ value, onChangeHandler }: DropdownProps) => {
   const [categories, setCategories] = useState<ICategory[]>([]);
   const [newCategory, setNewCategory] = useState("");
-  const [openAddCategory, setOpenAddCategory] = useState(false);
   const [openDialog, setOpenDialog] = useState(false);
 
   const handleAddCategory = () => {

@@ -102,53 +102,18 @@ export async function getAllEvents({
   }
 }
 
-// export async function updateEvent({ userId, event, path }: UpdateEventParams) {
-//   console.log("userId:", userId);
-//   console.log("event:", event);
-//   console.log("path:", path);
-//   try {
-//     console.log("userId:", userId);
-//     console.log("event:", event);
-//     console.log("path:", path);
-//     await connectToDatabase();
-
-//     const eventToUpdate = await Event.findById(event._id);
-//     if (!eventToUpdate || eventToUpdate.organizer.toHexString() !== userId) {
-//       throw new Error("Unauthorized or event not found");
-//     }
-
-//     const updatedEvent = await Event.findByIdAndUpdate(
-//       event._id,
-//       { ...event, category: event.categoryId },
-//       { new: true }
-//     );
-//     revalidatePath(path);
-
-//     return JSON.parse(JSON.stringify(updatedEvent));
-//   } catch (error) {
-//     handleError(error);
-//   }
-// }
 export async function updateEvent({ userId, event, path }: UpdateEventParams) {
   try {
-    console.log("Updating event with userId:", userId);
-    console.log("Event data:", event);
-    console.log("Path:", path);
-
     await connectToDatabase();
-    console.log("Updating event with ID:", event._id);
     const eventToUpdate = await Event.findById(event._id);
-    console.log("Retrieved event from database:", eventToUpdate);
     if (!eventToUpdate || eventToUpdate.organizer.toHexString() !== userId) {
       throw new Error("Unauthorized or event not found");
     }
-    console.log("Updating event data:", event);
     const updatedEvent = await Event.findByIdAndUpdate(
       event._id,
       { ...event, category: event.categoryId },
       { new: true }
     );
-    console.log("Updated event:", updatedEvent);
     revalidatePath(path);
     return JSON.parse(JSON.stringify(updatedEvent));
   } catch (error) {
@@ -160,7 +125,6 @@ export async function updateEvent({ userId, event, path }: UpdateEventParams) {
 export async function deleteEvent({ eventId, path }: DeleteEventParams) {
   try {
     await connectToDatabase();
-
     const deletedEvent = await Event.findByIdAndDelete(eventId);
     if (deletedEvent) revalidatePath(path);
   } catch (error) {
@@ -176,17 +140,14 @@ export async function getRelatedEventsByCategory({
 }: GetRelatedEventsByCategoryParams) {
   try {
     await connectToDatabase();
-
     const skipAmount = (Number(page) - 1) * limit;
     const conditions = {
       $and: [{ category: categoryId }, { _id: { $ne: eventId } }],
     };
-
     const eventsQuery = Event.find(conditions)
       .sort({ startDateTime: "desc" })
       .skip(skipAmount)
       .limit(limit);
-
     const events = await populateEvent(eventsQuery);
     const eventsCount = await Event.countDocuments(conditions);
 
@@ -206,15 +167,12 @@ export async function getEventsByUser({
 }: GetEventsByUserParams) {
   try {
     await connectToDatabase();
-
     const conditions = { organiser: userId };
     const skipAmount = (page - 1) * limit;
-
     const eventsQuery = Event.find(conditions)
       .sort({ startDateTime: "desc" })
       .skip(skipAmount)
       .limit(limit);
-
     const events = await populateEvent(eventsQuery);
     const eventsCount = await Event.countDocuments(conditions);
 

@@ -10,7 +10,6 @@ import { handleError } from "../utils";
 export const createUser = async (user: CreateUserParams) => {
   try {
     await connectToDatabase();
-
     const newUser = await User.create(user);
     return JSON.parse(JSON.stringify(newUser));
   } catch (error) {
@@ -21,11 +20,9 @@ export const createUser = async (user: CreateUserParams) => {
 export async function updateUser(clerkId: string, user: UpdateUserParams) {
   try {
     await connectToDatabase();
-
     const updatedUser = await User.findOneAndUpdate({ clerkId }, user, {
       new: true,
     });
-
     if (!updatedUser) throw new Error("User update failed");
     return JSON.parse(JSON.stringify(updatedUser));
   } catch (error) {
@@ -37,7 +34,6 @@ export async function deleteUser(clerkId: string) {
   try {
     await connectToDatabase();
     const userToDelete = await User.findOne({ clerkId });
-
     if (!userToDelete) {
       throw new Error("User not found");
     }

@@ -1,6 +1,6 @@
 "use client";
 import React, { useEffect } from "react";
-import { Typography, Box, Stack, Button, TextField } from "@mui/material";
+import { Box, Button } from "@mui/material";
 import { IEvent } from "@/lib/database/models/event.model";
 import { loadStripe } from "@stripe/stripe-js";
 import { checkoutOrder } from "@/lib/actions/order.actions";

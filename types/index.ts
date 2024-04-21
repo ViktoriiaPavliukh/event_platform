@@ -1,4 +1,3 @@
-// ====== USER PARAMS
 export type CreateUserParams = {
   clerkId: string;
   firstName: string;
@@ -14,8 +13,6 @@ export type UpdateUserParams = {
   username: string;
   photo: string;
 };
-
-// ====== EVENT PARAMS
 
 export type CreateEventParams = {
   userId: string;
@@ -99,13 +96,11 @@ export type Event = {
   };
 };
 
-// ====== CATEGORY PARAMS
 export type CreateCategoryParams = {
   _id?: string;
   categoryName: string;
 };
 
-// ====== ORDER PARAMS
 export type CheckoutOrderParams = {
   eventTitle: string;
   eventId: string;
@@ -133,7 +128,6 @@ export type GetOrdersByUserParams = {
   page: string | number | null;
 };
 
-// ====== URL QUERY PARAMS
 export type UrlQueryParams = {
   params: string;
   key: string;
