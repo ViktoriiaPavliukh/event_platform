@@ -69,6 +69,7 @@ const EventDetails = async ({
                 backgroundColor: "#d3cbc5",
                 padding: "5px 10px",
                 borderRadius: "6px",
+                color: "#585858",
               }}
             >
               {event.isFree ? "Free" : `£${event.price}`}
@@ -79,6 +80,7 @@ const EventDetails = async ({
                 backgroundColor: "#d3cbc5",
                 padding: "5px 10px",
                 borderRadius: "6px",
+                color: "#585858",
               }}
             >
               {event.category.name}
@@ -87,7 +89,7 @@ const EventDetails = async ({
           <Typography
             color="textSecondary"
             variant="h3"
-            sx={{ textAlign: "center" }}
+            sx={{ textAlign: "center", fontSize: { xs: "24px", sm: "50px" } }}
           >
             {event.title}
           </Typography>
@@ -122,7 +124,7 @@ const EventDetails = async ({
                 justifyContent: "center",
                 alignItems: "center",
                 gap: "10px",
-                color: "GrayText",
+                color: "#585858",
               }}
             >
               <CalendarMonthIcon />
@@ -136,11 +138,11 @@ const EventDetails = async ({
                 }}
               >
                 <Typography>
-                  {formatDateTime(event.startDateTime).dateOnly} -{" "}
+                  {formatDateTime(event.startDateTime).dateOnly} —{" "}
                   {formatDateTime(event.startDateTime).timeOnly}
                 </Typography>
                 <Typography>
-                  {formatDateTime(event.endDateTime).dateOnly} -{" "}
+                  {formatDateTime(event.endDateTime).dateOnly} —{" "}
                   {formatDateTime(event.endDateTime).timeOnly}
                 </Typography>
               </Box>
@@ -152,7 +154,7 @@ const EventDetails = async ({
                 justifyContent: "center",
                 alignItems: "center",
                 gap: "10px",
-                color: "GrayText",
+                color: "#585858",
               }}
             >
               <LocationOn />
@@ -167,10 +169,12 @@ const EventDetails = async ({
               gap: "20px",
             }}
           >
-            <Typography sx={{textAlign: "justify"}}>{event.description}</Typography>
+            <Typography sx={{ textAlign: "justify" }}>
+              {event.description}
+            </Typography>
             {event.url && (
               <Link href={event.url} passHref>
-                <Typography color="textSecondary" title={event.url}>
+                <Typography color="#585858" title={event.url}>
                   {shortenedUrl}
                 </Typography>
               </Link>
