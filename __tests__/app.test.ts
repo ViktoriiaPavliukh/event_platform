@@ -4,7 +4,6 @@ import {
   CreateCategoryParams,
   CreateEventParams,
   CreateOrderParams,
-  DeleteEventParams,
 } from "../types";
 import Order from "../lib/database/models/order.model";
 require("dotenv").config({ path: ".env.local" });

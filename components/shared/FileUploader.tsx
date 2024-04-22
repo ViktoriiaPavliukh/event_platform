@@ -60,8 +60,6 @@ export function FileUploader({
           <CloudUploadIcon
             sx={{ width: "50px", height: "50px", color: "#d3cbc5" }}
           />
-          <h3>Drag photo here</h3>
-          <p>SVG, PNG, JPG</p>
           <Button type="button" sx={{ padding: "10px 20px" }}>
             Select from device
           </Button>

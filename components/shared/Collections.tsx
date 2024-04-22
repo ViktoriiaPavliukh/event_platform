@@ -191,7 +191,7 @@ const Collections: React.FC<CollectionProps> = ({
                               },
                             }}
                           >
-                            <GoogleIcon />
+                            <GoogleIcon sx={{ color: "#585858" }} />
                             <Typography
                               className="show-text"
                               sx={{

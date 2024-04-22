@@ -35,7 +35,7 @@ const DeleteModal = ({ eventId }: { eventId: string }) => {
 
   return (
     <>
-      <DeleteOutlineIcon onClick={handleClickOpen} />
+      <DeleteOutlineIcon sx={{ color: "#585858" }} onClick={handleClickOpen} />
       <Dialog open={open} onClose={handleClose} sx={{ p: "20px" }}>
         <DialogTitle sx={{ p: "20px" }}>
           Are you sure you want to delete?
