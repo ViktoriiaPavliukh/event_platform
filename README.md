@@ -17,19 +17,23 @@ EventSpot is a platform for discovering and attending a wide range of events. Bu
 
 - Node.js
 - Next.js
+- React
 - TypeScript
 - Material UI
+- Clerk
 - Stripe
 - Zod
 - Google Calendar API
 - uploadthing
 - MongoDB
 - Mongoose
+- Axios
+- Jest
 
 ## 🔋 Features
 
-- 👉 Staff-Only Event Creation: Exclusive access for staff members to create and manage events, ensuring high-quality content.
-- 👉 Seamless Ticket Purchasing: Users can easily purchase tickets for their desired events with a streamlined checkout process.
+- 👉 Staff-Only Event Creation: Exclusive access for staff members to create, manage, edit, and delete events, ensuring high-quality content. Staff members can access the event creation page by entering the password "staff" for verification.
+- 👉 Seamless Ticket Purchasing: Users can easily purchase tickets, get free tickets or pay as you feel charge for their desired events with a streamlined checkout process.
 - 👉 Secure Authentication: Robust authentication system to ensure user data security and privacy.
 - 👉 Intuitive Event Discovery: Effortlessly explore and discover a diverse range of events tailored to your interests.
 - 👉 Interactive Event Pages: Engaging event pages with rich media, detailed descriptions, and user-friendly interfaces.

@@ -36,14 +36,16 @@ const DeleteModal = ({ eventId }: { eventId: string }) => {
   return (
     <>
       <DeleteOutlineIcon onClick={handleClickOpen} />
-      <Dialog open={open} onClose={handleClose}>
-        <DialogTitle>Are you sure you want to delete?</DialogTitle>
-        <DialogContent>
+      <Dialog open={open} onClose={handleClose} sx={{ p: "20px" }}>
+        <DialogTitle sx={{ p: "20px" }}>
+          Are you sure you want to delete?
+        </DialogTitle>
+        <DialogContent sx={{ p: "20px" }}>
           <DialogContentText>
             This will permanently delete this event.
           </DialogContentText>
         </DialogContent>
-        <DialogActions>
+        <DialogActions sx={{ p: "20px" }}>
           <Button onClick={handleClose} color="primary" disabled={isDeleting}>
             Cancel
           </Button>

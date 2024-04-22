@@ -10,6 +10,7 @@ const Loading = () => {
         alignItems: "center",
         height: "100vh",
         gap: "20px",
+        color: "#585858",
       }}
     >
       <CircularProgress />
