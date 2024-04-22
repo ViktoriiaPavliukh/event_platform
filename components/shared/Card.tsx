@@ -374,9 +374,9 @@ const EventCard = ({ event, hasOrderLink, hidePrice }: CardProps) => {
             borderRadius: "6px",
           }}
         >
-          {/* <Link href={`/events/${event._id}/update`}>
+          <Link href={`/events/${event._id}/update`}>
               <EditNoteIcon sx={{ paddingLeft: "3px" }} />
-            </Link> */}
+            </Link>
           <DeleteModal eventId={event._id} />
         </Box>
       )}
