@@ -124,7 +124,7 @@ const Header: React.FC<Props> = (props) => {
               priority={true}
             />
           </Link>
-          <List sx={{ display: { xs: "none", md: "flex" } }}>
+          <List sx={{ display: { xs: "none", md: "flex" }, minWidth: "55%" }}>
             {navItems.map((item) => {
               const isActive = pathname === item.route;
               return (

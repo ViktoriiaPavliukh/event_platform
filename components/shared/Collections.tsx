@@ -3,7 +3,7 @@ import React, { useState, useEffect } from "react";
 import { useGoogleLogin } from "@react-oauth/google";
 import GoogleIcon from "@mui/icons-material/Google";
 import { IEvent } from "../../lib/database/models/event.model";
-import { Box, Typography, List, ListItem, Button } from "@mui/material";
+import { Box, Typography, List, ListItem, Button, Modal } from "@mui/material";
 import Card from "./Card";
 import Pagination from "./Pagination";
 import { addEventToGoogleCalendar } from "../../lib/actions/calendar.actions";
@@ -35,6 +35,8 @@ const Collections: React.FC<CollectionProps> = ({
   const [buttonLabel, setButtonLabel] = useState<string>(
     "Open Google Calendar"
   );
+  const [successModalOpen, setSuccessModalOpen] = useState<boolean>(false);
+
   const user = useUser();
   let userEmail = user.user?.emailAddresses[0].emailAddress;
 
@@ -91,12 +93,16 @@ const Collections: React.FC<CollectionProps> = ({
           accessToken,
           userEmail
         );
-        setButtonLabel("Event is added to Google Calendar");
+        setSuccessModalOpen(true);
+        setButtonLabel("Add to Google Calendar");
       } catch (error) {
         console.error("Failed to add event to Google Calendar:", error);
-        setButtonLabel("Add to Google Calendar");
       }
     }
+  };
+
+  const handleCloseSuccessModal = () => {
+    setSuccessModalOpen(false);
   };
 
   return (
@@ -105,6 +111,7 @@ const Collections: React.FC<CollectionProps> = ({
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
+        position: "relative",
       }}
     >
       {loading ? (
@@ -184,7 +191,7 @@ const Collections: React.FC<CollectionProps> = ({
                               },
                             }}
                           >
-                            <GoogleIcon />
+                            <GoogleIcon sx={{ color: "#585858" }} />
                             <Typography
                               className="show-text"
                               sx={{
@@ -232,6 +239,30 @@ const Collections: React.FC<CollectionProps> = ({
           )}
         </>
       )}
+      <Modal open={successModalOpen} onClose={handleCloseSuccessModal}>
+        <Box
+          sx={{
+            p: "40px",
+            backgroundColor: "#d3cbc5",
+            position: "fixed",
+            top: "50%",
+            left: "50%",
+            transform: "translate(-50%, -50%)",
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "center",
+            alignItems: "center",
+            gap: "40px",
+            borderRadius: "12px",
+            textAlign: "center",
+          }}
+        >
+          <Typography variant="h6">
+            Event added to Google Calendar successfully!
+          </Typography>
+          <Button onClick={handleCloseSuccessModal}>Close</Button>
+        </Box>
+      </Modal>
     </Box>
   );
 };

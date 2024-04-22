@@ -49,7 +49,7 @@ export default async function Home({ searchParams }: SearchParamProps) {
         <Stack
           sx={{
             display: "flex",
-            flexDirection: { sm: "column", md: "row" },
+            flexDirection: { sm: "column", xl: "row" },
             gap: "30px",
             width: { xs: "fit-content" },
             justifyContent: "center",
