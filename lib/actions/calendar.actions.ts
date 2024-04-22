@@ -1,5 +1,4 @@
 import axios from "axios";
-import { useGoogleOAuth } from "@react-oauth/google";
 
 interface Event {
   summary: string;
@@ -29,7 +28,6 @@ export async function addEventToGoogleCalendar(
         },
       }
     );
-    // console.log("Event added to Google Calendar successfully:", res.data);
   } catch (error) {
     console.error("Error adding event to Google Calendar:", error);
     throw new Error("Failed to add event to Google Calendar.");

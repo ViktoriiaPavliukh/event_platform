@@ -63,7 +63,7 @@ export function FileUploader({
           <h3>Drag photo here</h3>
           <p>SVG, PNG, JPG</p>
           <Button type="button" sx={{ padding: "10px 20px" }}>
-            Select from computer
+            Select from device
           </Button>
         </div>
       )}
