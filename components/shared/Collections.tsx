@@ -32,6 +32,9 @@ const Collections: React.FC<CollectionProps> = ({
 }) => {
   const [accessToken, setAccessToken] = useState<string | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
+  const [buttonLabel, setButtonLabel] = useState<string>(
+    "Open Google Calendar"
+  );
   const user = useUser();
   let userEmail = user.user?.emailAddresses[0].emailAddress;
 
@@ -42,13 +45,14 @@ const Collections: React.FC<CollectionProps> = ({
   const login = useGoogleLogin({
     onSuccess: (response) => {
       setAccessToken(response.access_token);
+      setButtonLabel("Add to Google Calendar");
     },
     onError: (error) => console.error(error),
   });
 
-  const addEvent = (event: IEvent) => {
+  const addEvent = async (event: IEvent) => {
     if (!accessToken) {
-      login();
+      await login();
     } else {
       if (typeof event.startDateTime === "string") {
         const parsedStartDate = new Date(event.startDateTime);
@@ -72,20 +76,26 @@ const Collections: React.FC<CollectionProps> = ({
         console.error("endDateTime is not a valid Date object");
         return;
       }
-      addEventToGoogleCalendar(
-        {
-          summary: event.title,
-          description: event.description || "",
-          start: {
-            dateTime: event.startDateTime.toISOString(),
+      try {
+        await addEventToGoogleCalendar(
+          {
+            summary: event.title,
+            description: event.description || "",
+            start: {
+              dateTime: event.startDateTime.toISOString(),
+            },
+            end: {
+              dateTime: event.endDateTime.toISOString(),
+            },
           },
-          end: {
-            dateTime: event.endDateTime.toISOString(),
-          },
-        },
-        accessToken,
-        userEmail
-      );
+          accessToken,
+          userEmail
+        );
+        setButtonLabel("Event is added to Google Calendar");
+      } catch (error) {
+        console.error("Failed to add event to Google Calendar:", error);
+        setButtonLabel("Add to Google Calendar");
+      }
     }
   };
 
@@ -185,7 +195,7 @@ const Collections: React.FC<CollectionProps> = ({
                                 pl: "5px",
                               }}
                             >
-                              Add to Google Calendar
+                              {buttonLabel}
                             </Typography>
                           </Button>
                         </Box>

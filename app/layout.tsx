@@ -39,6 +39,10 @@ export default function RootLayout({
               httpEquiv="Cross-Origin-Opener-Policy"
               content="same-origin"
             />
+            <meta
+              name="viewport"
+              content="width=device-width, initial-scale=1.0"
+            />
           </Head>
           <html lang="en">
             <body suppressHydrationWarning={true} className={inter.variable}>
